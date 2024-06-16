@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Crown Source</title>
+    <link rel="stylesheet" href="/styles/auth/login.css" />
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="login-box">
+        <div class="logo">
+          <img src="/images/logo.png" alt="Crown Source Logo" />
+        </div>
+        <h1>WELCOME TO CROWN SOURCING  <span>!!</span></h1>
+        <p>WE REQUESTED YOU TO PROVE YOUR IDENTITY FIRST</p>
+        <form action="/login" method="post">
+          <input
+            type="text"
+            name="username"
+            placeholder="Enter Username"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            required
+          />
+          <button type="submit">Log In</button>
+        </form>
+        <a href="/request-account">Request Account ?</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -2,6 +2,6 @@
 
 A Basic express app.
 
-# Version 1
+# Version 0.2
 
-Add login and Register functionality
+Design Login and Register for User Registration

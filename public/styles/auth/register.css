@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Alegreya Sans SC", sans-serif;
+}
+
+body {
+  background-color: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.register-box {
+  background-color: #1c1c1c;
+  padding: 30px 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 92vw;
+  color: #d4af37;
+}
+
+.logo img {
+  width: 120px;
+  height: 170px;
+  object-fit: cover;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 400;
+  margin-top: 15px;
+}
+
+h1 span {
+  font-family: "poppins";
+}
+
+p {
+  font-size: 22px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto 35px auto;
+}
+
+input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #d4af37;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 20px;
+  font-family: "poppins";
+}
+
+.admin-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto;
+  gap: 15px;
+}
+
+.admin-checkbox input {
+  width: 20px;
+  height: 20px;
+  margin-top: 7px;
+}
+
+.admin-checkbox label{
+    font-size: 25px;
+}
+
+button {
+  margin-top: 20px;
+  background-color: #d4af37;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: #1c1c1c;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+button:hover {
+  background-color: #b8952e;
+}
+
+a {
+  display: block;
+  margin-top: 10px;
+  color: #d4af37;
+  text-decoration: none;
+  font-size: 25px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
