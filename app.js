@@ -37,6 +37,10 @@ app.get("/", isLoggedIn, (req, res) => {
 const authRouter = require("./routes/auth");
 app.use("/auth", authRouter);
 
+// Import User route
+const userRouter = require("./routes/user");
+app.use("/user", userRouter);
+
 // Set the port from environment variables or default to 3000
 const PORT = process.env.PORT || 3000;
 

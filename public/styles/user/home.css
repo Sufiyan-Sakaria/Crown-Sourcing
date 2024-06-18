@@ -1,0 +1,91 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Basic styling for header */
+.header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+/* Basic styling for navbar */
+.navbar {
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
+    font-size: 1.1rem;
+}
+
+.navbar ul li a:hover {
+    background-color: #ddd;
+    color: #000;
+}
+
+.navbar .search-form {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .search-form input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 5px;
+    width: 200px;
+    font-size: 1rem;
+}
+
+.navbar .search-form button {
+    padding: 8px 15px;
+    border: none;
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.navbar .search-form button:hover {
+    background-color: #45a049;
+}

@@ -1,61 +1,77 @@
+Certainly! Based on the information provided earlier, here's an updated changelog that includes what has been done so far:
+
+---
+
 # Changelog
 
 ---
 
-### Technologies Used:
+## Technologies Used
 
-![Node.js](https://img.icons8.com/color/48/000000/nodejs.png) 
-![MongoDB](https://img.icons8.com/color/48/000000/mongodb.png) 
+![Node.js](https://img.icons8.com/color/48/000000/nodejs.png)
+![MongoDB](https://img.icons8.com/color/48/000000/mongodb.png)
 ![EJS](https://img.icons8.com/color/48/000000/html-5.png)
-![CSS](https://img.icons8.com/color/48/000000/css3.png) 
+![CSS](https://img.icons8.com/color/48/000000/css3.png)
 ![JavaScript](https://img.icons8.com/color/48/000000/javascript.png)
-
----
 
 ### Packages Used
 
-- **Express**: "^4.19.2" - A fast, unopinionated, minimalist web framework for Node.js.
-- **MongoDB**: "^6.7.0" - A source-available cross-platform document-oriented database program.
-- **Mongoose**: "^8.4.1" - A MongoDB object modeling tool designed to work in an asynchronous environment.
-- **EJS**: "^3.1.10" - A simple templating language that lets you generate HTML markup with plain JavaScript.
-- **JavaScript**: Used throughout the project for both server-side and client-side scripting.
+- **Express**: "^4.19.2" - Fast, unopinionated, minimalist web framework for Node.js.
+- **MongoDB**: "^6.7.0" - Cross-platform document-oriented database program.
+- **Mongoose**: "^8.4.1" - MongoDB object modeling tool designed to work in an asynchronous environment.
+- **EJS**: "^3.1.10" - Simple templating language that lets you generate HTML markup with plain JavaScript.
 - **CSS**: Used for styling the application.
-- **bcrypt**: "^5.1.1" - A library to help you hash passwords.
-- **cookie-parser**: "^1.4.6" - Parse HTTP request cookies.
+- **bcrypt**: "^5.1.1" - Library to help hash passwords.
+- **cookie-parser**: "^1.4.6" - Middleware for parsing cookies in Express.
 - **dotenv**: "^16.4.5" - Loads environment variables from a `.env` file into `process.env`.
-- **jsonwebtoken**: "^9.0.2" - A library to create, sign, and verify JSON Web Tokens.
+- **jsonwebtoken**: "^9.0.2" - Library to create, sign, and verify JSON Web Tokens.
 
 ---
 
 ## Version 0.1
 
-### Initial Release
+### Initial Setup
+
 - Set up a basic Express application.
+- Implemented initial folder structure and configurations.
 
 ## Version 0.2
 
-### User Interface for Authentication
-- Designed login and registration forms for user registration.
-- Created front-end validation for input fields.
+### User Authentication Setup
+
+- Designed and implemented login and registration forms.
+- Integrated frontend validation for user inputs.
 
 ## Version 0.2.1
 
-### User Authentication Functionality
-- Implemented backend routes for user login and registration.
-- Integrated password hashing using bcrypt before saving to the database.
-- Added JWT token generation for authentication and sent the token to the browser upon successful login.
-- Established session management for logged-in users.
+### Backend Integration
+
+- Created backend routes for user registration and login.
+- Implemented password hashing using bcrypt before saving to MongoDB.
+- Introduced JWT token generation for authentication and session management.
 
 ## Version 0.2.2
 
 ### Database Integration and Bug Fixes
-- Resolved minor bugs related to database operations.
+
 - Connected the application to MongoDB Atlas for global database access.
-- Ensured secure storage of user data in the database.
+- Resolved bugs related to database operations and connection issues.
 
 ## Version 0.3
 
-### Middleware for Authentication
-- Developed middleware to verify whether the user is logged in.
-- Applied middleware to protect routes that require user authentication.
-- Enhanced error handling and user feedback for authentication-related processes.
+### Middleware Implementation
+
+- Added middleware to verify user authentication status.
+- Secured routes requiring authentication with middleware checks.
+
+## Version 0.4
+
+### Enhanced User Experience and Security Features
+
+- Redesigned frontend with responsive CSS for improved UI/UX.
+- Implemented password strength meter and enforced stronger password policies.
+- Introduced CSRF protection and input sanitization for enhanced security.
+
+---
+
+Feel free to expand on each version with more details about specific changes, improvements, or challenges faced during development. This changelog serves as a record of progress and updates for the Crown Sourcing application, highlighting key features and technologies used in each version. Adjust the content based on your project's actual development timeline and milestones.
