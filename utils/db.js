@@ -1,9 +1,5 @@
-// import 
+// import mongoose
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-
-// Load environment variables from .env file
-dotenv.config();
 
 // Function to connect to MongoDB
 const connectToDatabase = () => {
@@ -14,10 +10,8 @@ const connectToDatabase = () => {
     return;
   }
 
-  console.log("Connecting to MongoDB with URI:", uri); // Debugging statement
-
   mongoose
-    .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(uri)
     .then(() => {
       console.log("Database connected successfully"); // Log success message
     })
