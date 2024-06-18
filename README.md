@@ -13,3 +13,7 @@ Add login and register functionality and hash password save to Database and toke
 # Version 0.2.2
 
 Fix the small bugs related to Database and connect it to global in mongoDb Atlas.
+
+# Version 0.3
+
+Add a Middleware to check whether User is login or not.

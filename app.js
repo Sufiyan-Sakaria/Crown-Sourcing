@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const isLoggedIn = require("./middlewares/isLoggedIn");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -29,10 +30,9 @@ const connectToDatabase = require("./utils/db");
 connectToDatabase();
 
 // Basic route
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.get("/", isLoggedIn, (req, res) => {
+  res.send(req.user.username);
 });
-
 // Import Auth route
 const authRouter = require("./routes/auth");
 app.use("/auth", authRouter);
