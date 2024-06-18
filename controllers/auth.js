@@ -16,10 +16,12 @@ const login = async (req, res) => {
 
     // If password is correct, generate token and redirect to home page
     if (verifyPassword(password, user, res)) {
-      let payload = { username: User.username, id: User._id };
+      let payload = { username: user.username, id: user._id };
       let token = jwt.sign(payload, process.env.JWT_KEY);
       res.cookie("token", token);
       res.redirect("/");
+    } else {
+      res.send("incorrrect Password");
     }
   } catch (error) {
     // Send error response if login fails
@@ -34,7 +36,7 @@ const register = async (req, res) => {
     // Create a new user in the database
     const newUser = await userModel.create({
       username,
-      password: await hashPassword(password, res), // Hash the password before saving
+      password: hashPassword(password, res),
       isAdmin: isAdmin === "on",
     });
 
