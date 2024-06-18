@@ -16,7 +16,7 @@ const login = async (req, res) => {
 
     // If password is correct, generate token and redirect to home page
     if (verifyPassword(password, user, res)) {
-      let payload = { username: newUser.username, id: newUser._id };
+      let payload = { username: User.username, id: User._id };
       let token = jwt.sign(payload, process.env.JWT_KEY);
       res.cookie("token", token);
       res.redirect("/");
