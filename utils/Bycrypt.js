@@ -1,26 +1,25 @@
 const bcrypt = require("bcrypt");
 
-// Function to hash the password (async function)
-const hashPassword = async (password) => {
+const hashPassword = (password , res) => {
   try {
     // Generate a salt to hash the password
-    const salt = await bcrypt.genSalt(10);
-
-    // Hash the password using the generated salt
-    const hash = await bcrypt.hash(password, salt);
-
-    // Return the hashed password
-    return hash;
+    bcrypt.genSalt(10, (err, salt) => {
+      if (err) return res.send(err.message);
+      bcrypt.hash(password, salt, (err, hash) => {
+        if (err) return res.send(err.message);
+        return hash;
+      });
+    });
   } catch (error) {
     throw new Error("Error hashing password: " + error.message);
   }
 };
 
 // Function to verify the password (async function)
-const verifyPassword = async (password, hashedPassword) => {
+const verifyPassword = async (password, user) => {
   try {
     // Compare the provided password with the hashed password
-    const result = await bcrypt.compare(password, hashedPassword);
+    const result = await bcrypt.compare(password, user.password);
 
     // Return true if passwords match, false otherwise
     return result;
