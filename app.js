@@ -2,6 +2,7 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -17,9 +18,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Set up view engine
-
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+
+// Set up Middleware for Cookie Parser
+app.use(cookieParser());
+
+// Connect to Database
+const connectToDatabase = require("./utils/db");
+connectToDatabase();
 
 // Basic route
 app.get("/", (req, res) => {

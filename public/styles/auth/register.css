@@ -43,6 +43,7 @@ h1 {
   font-size: 24px;
   font-weight: 400;
   margin-top: 15px;
+  line-height: 1;
 }
 
 h1 span {
@@ -115,4 +116,12 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 13%;
+  bottom: 39%;
+  cursor: pointer;
+  font-size: 30px;
 }

@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register - Crown Source</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
+    />
     <link rel="stylesheet" href="/styles/auth/register.css" />
   </head>
   <body>
@@ -12,24 +16,28 @@
         <div class="logo">
           <img src="/images/logo.png" alt="Crown Source Logo" />
         </div>
-        <h1>REGISTER AT CROWN SOURCING <span>  !!</span></h1>
-        <form action="/register" method="post">
+        <h1>REGISTER AT <br />CROWN SOURCING <span> !!</span></h1>
+        <form action="/auth/register" method="post">
           <input
             type="text"
             name="username"
             placeholder="Enter Username"
             required
-            max="64"
-            min="4"
+            maxlength="64"
+            minlength="4"
           />
           <input
             type="password"
             name="password"
+            id="password"
             placeholder="Enter Password"
             required
-            max="32"
-            min="8"
+            maxlength="32"
+            minlength="8"
           />
+          <span class="toggle-password" onclick="togglePassword('password')">
+            <i id="password-icon" class="ri-eye-line"></i>
+          </span>
           <div class="admin-checkbox">
             <input type="checkbox" id="isAdmin" name="isAdmin" />
             <label for="isAdmin">Is Admin</label>
@@ -39,5 +47,6 @@
         <a href="/auth/login">Back to Login</a>
       </div>
     </div>
+    <script src="/javascript/password.js"></script>
   </body>
 </html>

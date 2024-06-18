@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Crown Source</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
+    />
     <link rel="stylesheet" href="/styles/auth/login.css" />
   </head>
   <body>
@@ -12,9 +16,9 @@
         <div class="logo">
           <img src="/images/logo.png" alt="Crown Source Logo" />
         </div>
-        <h1>WELCOME TO CROWN SOURCING  <span>!!</span></h1>
+        <h1>WELCOME TO <br>CROWN SOURCING <span>!!</span></h1>
         <p>WE REQUESTED YOU TO PROVE YOUR IDENTITY FIRST</p>
-        <form action="/login" method="post">
+        <form action="/auth/login" method="post">
           <input
             type="text"
             name="username"
@@ -24,13 +28,18 @@
           <input
             type="password"
             name="password"
+            id="password"
             placeholder="Enter Password"
             required
           />
+          <span class="toggle-password" onclick="togglePassword('password')">
+            <i id="password-icon" class="ri-eye-line"></i>
+          </span>
           <button type="submit">Log In</button>
         </form>
         <a href="/request-account">Request Account ?</a>
       </div>
     </div>
+    <script src="/javascript/password.js"></script>
   </body>
 </html>
