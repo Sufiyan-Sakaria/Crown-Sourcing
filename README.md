@@ -14,16 +14,16 @@
 
 ### Packages Used
 
-- ![Express](https://img.icons8.com/color/48/000000/express.png) **Express**: "^4.19.2" - A fast, unopinionated, minimalist web framework for Node.js.
-- ![MongoDB](https://img.icons8.com/color/48/000000/mongodb.png) **MongoDB**: "^6.7.0" - A source-available cross-platform document-oriented database program.
-- ![Mongoose](https://img.icons8.com/color/48/000000/mongoose.png) **Mongoose**: "^8.4.1" - A MongoDB object modeling tool designed to work in an asynchronous environment.
-- ![EJS](https://img.icons8.com/color/48/000000/html-5.png) **EJS**: "^3.1.10" - A simple templating language that lets you generate HTML markup with plain JavaScript.
-- ![JavaScript](https://img.icons8.com/color/48/000000/javascript.png) **JavaScript**: Used throughout the project for both server-side and client-side scripting.
-- ![CSS](https://img.icons8.com/color/48/000000/css3.png) **CSS**: Used for styling the application.
-- ![bcrypt](https://img.icons8.com/color/48/000000/bcrypt.png) **bcrypt**: "^5.1.1" - A library to help you hash passwords.
-- ![cookie-parser](https://img.icons8.com/color/48/000000/cookie.png) **cookie-parser**: "^1.4.6" - Parse HTTP request cookies.
-- ![dotenv](https://img.icons8.com/color/48/000000/env.png) **dotenv**: "^16.4.5" - Loads environment variables from a `.env` file into `process.env`.
-- ![jsonwebtoken](https://img.icons8.com/color/48/000000/json-web-token.png) **jsonwebtoken**: "^9.0.2" - A library to create, sign, and verify JSON Web Tokens.
+- **Express**: "^4.19.2" - A fast, unopinionated, minimalist web framework for Node.js.
+- **MongoDB**: "^6.7.0" - A source-available cross-platform document-oriented database program.
+- **Mongoose**: "^8.4.1" - A MongoDB object modeling tool designed to work in an asynchronous environment.
+- **EJS**: "^3.1.10" - A simple templating language that lets you generate HTML markup with plain JavaScript.
+- **JavaScript**: Used throughout the project for both server-side and client-side scripting.
+- **CSS**: Used for styling the application.
+- **bcrypt**: "^5.1.1" - A library to help you hash passwords.
+- **cookie-parser**: "^1.4.6" - Parse HTTP request cookies.
+- **dotenv**: "^16.4.5" - Loads environment variables from a `.env` file into `process.env`.
+- **jsonwebtoken**: "^9.0.2" - A library to create, sign, and verify JSON Web Tokens.
 
 ---
 
