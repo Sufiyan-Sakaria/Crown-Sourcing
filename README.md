@@ -1,5 +1,3 @@
-Certainly! Here's an expansion on the feature plans for future versions of the application:
-
 # Future Plans
 
 ### Stability and Performance Enhancements
