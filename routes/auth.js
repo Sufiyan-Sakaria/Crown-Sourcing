@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const { login, register } = require("../controllers/auth");
+const isAdmin = require("../middlewares/isAdmin");
+const isLoggedIn = require("../middlewares/isLoggedIn");
 
 // Route to render login form
 router.get("/login", (req, res) => {
@@ -20,7 +22,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Route to render register form
-router.get("/register", (req, res) => {
+router.get("/register", isLoggedIn, isAdmin, (req, res) => {
   try {
     res.render("auth/register"); // Render the register form
   } catch (error) {
@@ -33,7 +35,7 @@ router.post("/register", async (req, res) => {
   try {
     await register(req, res); // Call the register controller function
   } catch (error) {
-    res.status(500).send("Error during registration: " + error.message); // Send error response if registration fails
+    req.flash("error_msg", `Error Registering User : ${error.message}`); // Send error response if registration fails
   }
 });
 

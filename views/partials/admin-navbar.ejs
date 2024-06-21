@@ -1,0 +1,22 @@
+<nav>
+  <ul>
+    <li>
+      <a href="/admin/users"><i class="ri-user-line <% if (path === "/users") { %> <%= "active" %><% } %>"></i>
+      <p class="<% if (path === "/users") { %> <%= "active" %><% } %>">Users</p></a>
+    </li>
+    <li>
+      <a href=""><i class="ri-box-1-line"></i></a>
+    </li>
+    <li>
+      <a href="/">
+        <i class="ri-home-2-line <% if (path === "/admin") { %> <%= "active" %> <% } %>"></i><p class="<% if (path === "/admin") { %> <%= "active" %> <% } %>">Home</p>
+      </a>
+    </li>
+    <li>
+      <a href=""><i class="ri-file-text-line"></i></a>
+    </li>
+    <li>
+      <a href=""><i class="ri-pie-chart-line"></i></a>
+    </li>
+  </ul>
+</nav>

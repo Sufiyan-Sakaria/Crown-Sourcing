@@ -1,5 +1,5 @@
 const userModel = require("../models/user");
-const { hashPassword, verifyPassword } = require("../utils/Bycrypt");
+const Bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 // Controller function for user login
@@ -15,14 +15,16 @@ const login = async (req, res) => {
     }
 
     // If password is correct, generate token and redirect to home page
-    if (verifyPassword(password, user, res)) {
-      let payload = { username: user.username, id: user._id };
-      let token = jwt.sign(payload, process.env.JWT_KEY);
-      res.cookie("token", token);
-      res.redirect("/");
-    } else {
-      res.send("incorrrect Password");
-    }
+    Bcrypt.compare(password, user.password, (err, result) => {
+      if (!result) {
+        return res.send("Invalid Password");
+      } else {
+        let payload = { username: user.username, id: user._id };
+        let token = jwt.sign(payload, process.env.JWT_KEY);
+        res.cookie("token", token);
+        res.redirect("/");
+      }
+    });
   } catch (error) {
     // Send error response if login fails
     res.send(error.message);
@@ -31,23 +33,19 @@ const login = async (req, res) => {
 
 // Controller function for user registration
 const register = async (req, res) => {
-  const { username, password, isAdmin } = req.body;
+  const { username, password, Role } = req.body;
   try {
     // Create a new user in the database
     const newUser = await userModel.create({
       username,
-      password: hashPassword(password, res),
-      isAdmin: isAdmin === "on",
+      password: await Bcrypt.hash(password, 10),
+      role: Role,
     });
-
-    // Generate token for the new user and redirect to home page
-    let payload = { username: newUser.username, id: newUser._id };
-    let token = jwt.sign(payload, process.env.JWT_KEY);
-    res.cookie("token", token);
-    res.redirect("/");
+    req.flash("success_msg", "User Created successfully");
+    res.redirect("/admin/users");
   } catch (err) {
     // Send error response if registration fails
-    res.send(err.message);
+    req.flash("error_msg", "Error creating user : " + err.message);
   }
 };
 

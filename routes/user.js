@@ -2,7 +2,8 @@ const isLoggedIn = require("../middlewares/isLoggedIn");
 const router = require("express").Router();
 
 router.get("/", isLoggedIn, (req, res) => {
-  res.render("user/home");
+  let path = "/user";
+  res.render("user/home", { path });
 });
 
 module.exports = router;

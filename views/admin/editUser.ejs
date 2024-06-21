@@ -3,29 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Crown Source</title>
+    <title>Edit User - Crown Source</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
     />
-    <link rel="stylesheet" href="/styles/auth/login.css" />
+    <link rel="stylesheet" href="/styles/auth/register.css" />
   </head>
   <body>
-    <div class="login-container">
-      <div class="login-box">
+    <div class="register-container">
+      <div class="register-box">
         <div class="logo">
           <img src="/images/logo.png" alt="Crown Source Logo" />
         </div>
-        <h1>WELCOME TO <br />CROWN SOURCING <span>!!</span></h1>
-        <p>WE REQUESTED YOU TO PROVE YOUR IDENTITY FIRST</p>
-        <form action="/auth/login" method="post">
+        <h1>Update The user</h1>
+        <form action="/admin/user/edit/<%= user._id %>" method="post">
           <input
             type="text"
             name="username"
             placeholder="Enter Username"
+            required
             maxlength="64"
             minlength="4"
-            required
+            value="<%= user.username %>"
           />
           <div class="password-input">
             <input
@@ -41,9 +41,22 @@
               <i id="password-icon" class="ri-eye-line"></i>
             </span>
           </div>
-          <button type="submit">Log In</button>
+          <div class="Role">
+            <label for="Role">Role : </label>
+            <select name="Role" id="Role">
+              <% if (user.role === "Admin") { %>
+              <option value="">Select A Role</option>
+              <option selected value="Admin">Admin</option>
+              <option value="User">User</option>
+              <% } else { %>
+              <option value="">Select A Role</option>
+              <option value="Admin">Admin</option>
+              <option selected="User">User</option>
+              <% } %>
+            </select>
+          </div>
+          <button type="submit">Update User</button>
         </form>
-        <a href="/request-account">Request Account ?</a>
       </div>
     </div>
     <script src="/javascript/password.js"></script>

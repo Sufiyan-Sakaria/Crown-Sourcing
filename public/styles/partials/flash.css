@@ -1,0 +1,19 @@
+.flash {
+  width: 75vw;
+  margin: 5px auto;
+}
+
+.flash p {
+  border-radius: 6px;
+  font-size: 22px;
+  text-transform: capitalize;
+}
+
+.success {
+  background: #4cbb17;
+  color: rgb(77, 76, 76);
+}
+
+.error {
+  background: #ff0000;
+}
