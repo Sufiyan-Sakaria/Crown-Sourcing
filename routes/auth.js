@@ -22,7 +22,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Route to render register form
-router.get("/register", isLoggedIn, isAdmin, (req, res) => {
+router.get("/register", (req, res) => {
   try {
     res.render("auth/register"); // Render the register form
   } catch (error) {
