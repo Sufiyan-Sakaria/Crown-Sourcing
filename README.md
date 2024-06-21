@@ -1,7 +1,5 @@
 # Changelog
 
----
-
 ## Technologies Used
 
 ![Node.js](https://img.icons8.com/color/48/000000/nodejs.png)
