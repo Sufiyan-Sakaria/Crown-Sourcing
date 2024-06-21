@@ -1,10 +1,5 @@
 # Changelog
 
----
-=======
-# Future Plans
->>>>>>> 4221b68e96ff4ec35aa94b5b404f3ead1f0d5916
-
 ## Technologies Used
 
 ![Node.js](https://img.icons8.com/color/48/000000/nodejs.png)
@@ -15,17 +10,17 @@
 
 ### Packages Used
 
-- *Express*: "^4.19.2" - Fast, unopinionated, minimalist web framework for Node.js.
-- *MongoDB*: "^6.7.0" - Cross-platform document-oriented database program.
-- *Mongoose*: "^8.4.1" - MongoDB object modeling tool designed to work in an asynchronous environment.
-- *EJS*: "^3.1.10" - Simple templating language that lets you generate HTML markup with plain JavaScript.
-- *CSS*: Used for styling the application.
-- *bcrypt*: "^5.1.1" - Library to help hash passwords.
-- *cookie-parser*: "^1.4.6" - Middleware for parsing cookies in Express.
-- *dotenv*: "^16.4.5" - Loads environment variables from a .env file into process.env.
-- *jsonwebtoken*: "^9.0.2" - Library to create, sign, and verify JSON Web Tokens.
-- *connect-flash*: "^0.1.1" - Used for flash messages.
-- *express-session*: "^1.17.2" - Middleware for managing sessions.
+- _Express_: "^4.19.2" - Fast, unopinionated, minimalist web framework for Node.js.
+- _MongoDB_: "^6.7.0" - Cross-platform document-oriented database program.
+- _Mongoose_: "^8.4.1" - MongoDB object modeling tool designed to work in an asynchronous environment.
+- _EJS_: "^3.1.10" - Simple templating language that lets you generate HTML markup with plain JavaScript.
+- _CSS_: Used for styling the application.
+- _bcrypt_: "^5.1.1" - Library to help hash passwords.
+- _cookie-parser_: "^1.4.6" - Middleware for parsing cookies in Express.
+- _dotenv_: "^16.4.5" - Loads environment variables from a .env file into process.env.
+- _jsonwebtoken_: "^9.0.2" - Library to create, sign, and verify JSON Web Tokens.
+- _connect-flash_: "^0.1.1" - Used for flash messages.
+- _express-session_: "^1.17.2" - Middleware for managing sessions.
 
 ---
 
@@ -77,36 +72,39 @@
 
 ### Admin Panel and Enhanced Security
 
-- *Admin Panel Design and Functionality*
+- _Admin Panel Design and Functionality_
+
   - Created admin home page and users page.
   - Designed UI updates for admin interface including navbar and header.
   - Added functionality to manage users (edit, delete, view all).
 
-- *Middleware Enhancements*
+- _Middleware Enhancements_
+
   - Implemented middleware for user authentication status and admin role verification.
 
-- *Security Enhancements*
+- _Security Enhancements_
   - Introduced CSRF protection across application forms.
   - Implemented input sanitization to prevent XSS attacks.
   - Added flash messages for better user feedback.
 
 ### Package Updates
 
-- *New Packages*
-  - *connect-flash*: "^0.1.1" - Used for flash messages.
-  - *express-session*: "^1.17.2" - Middleware for managing sessions.
+- _New Packages_
+  - _connect-flash_: "^0.1.1" - Used for flash messages.
+  - _express-session_: "^1.17.2" - Middleware for managing sessions.
 
 ### Other Changes
 
 - Updated existing packages:
-  - *Express*: "^4.19.2"
-  - *MongoDB*: "^6.7.0"
-  - *Mongoose*: "^8.4.1"
-  - *EJS*: "^3.1.10"
-  - *bcrypt*: "^5.1.1"
-  - *cookie-parser*: "^1.4.6"
-  - *dotenv*: "^16.4.5"
-  - *jsonwebtoken*: "^9.0.2"
+
+  - _Express_: "^4.19.2"
+  - _MongoDB_: "^6.7.0"
+  - _Mongoose_: "^8.4.1"
+  - _EJS_: "^3.1.10"
+  - _bcrypt_: "^5.1.1"
+  - _cookie-parser_: "^1.4.6"
+  - _dotenv_: "^16.4.5"
+  - _jsonwebtoken_: "^9.0.2"
 
 - Fixed various bugs related to database operations and UI/UX improvements.
 
