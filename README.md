@@ -1,9 +1,6 @@
 # Changelog
 
 ---
-=======
-# Future Plans
->>>>>>> 4221b68e96ff4ec35aa94b5b404f3ead1f0d5916
 
 ## Technologies Used
 
