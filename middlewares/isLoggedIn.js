@@ -3,6 +3,7 @@ const UserModel = require("../models/user");
 
 const isLoggedIn = async (req, res, next) => {
   try {
+
     const token = req.cookies.token; // Get the token from the cookie
 
     if (!token) {

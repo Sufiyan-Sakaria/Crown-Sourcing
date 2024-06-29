@@ -5,8 +5,9 @@
 
 .flash p {
   border-radius: 6px;
-  font-size: 22px;
+  font-size: 18px;
   text-transform: capitalize;
+  text-align: center;
 }
 
 .success {

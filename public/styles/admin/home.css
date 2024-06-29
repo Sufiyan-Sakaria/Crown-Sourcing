@@ -31,30 +31,31 @@ main {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 25px;
+  gap: 15px;
+  padding: 15px 0;
 }
 
 .info {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .info h3 {
   font-weight: 400;
-  font-size: 35px;
+  font-size: 25px;
   text-transform: uppercase;
   color: #d4af37;
   text-align: center;
   line-height: 1;
 }
 
-.info i {
-  font-size: 35px;
-  color: #d4af37;
+.info img {
+  width: 50px;
 }
 
 .details p {
-  font-size: 18px;
+  font-size: 16px;
 }

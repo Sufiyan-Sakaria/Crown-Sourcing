@@ -22,7 +22,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Route to render register form
-router.get("/register", (req, res) => {
+router.get("/register", isLoggedIn , isAdmin ,  (req, res) => {
   try {
     res.render("auth/register"); // Render the register form
   } catch (error) {
@@ -40,7 +40,7 @@ router.post("/register", async (req, res) => {
 });
 
 // Route to handle user logout
-router.get("/logout", (req, res) => {
+router.get("/logout", isLoggedIn , (req, res) => {
   try {
     res.clearCookie("token"); // Clear the authentication token cookie
     res.redirect("/"); // Redirect to home page

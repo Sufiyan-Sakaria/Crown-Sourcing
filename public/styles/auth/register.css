@@ -44,10 +44,7 @@ h1 {
   font-weight: 400;
   margin-top: 15px;
   line-height: 1;
-}
-
-h1 span {
-  font-family: "poppins";
+  text-transform: uppercase;
 }
 
 p {
@@ -101,6 +98,7 @@ a:hover {
 }
 
 .password-input {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -113,9 +111,11 @@ a:hover {
 }
 
 .toggle-password {
+  position: absolute;
+  right: 2.5vw;
+  bottom: 1vh;
   cursor: pointer;
   font-size: 30px;
-  margin-right: 10px;
 }
 
 .Role {

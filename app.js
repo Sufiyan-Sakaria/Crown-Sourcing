@@ -58,6 +58,13 @@ app.get("/", isLoggedIn, (req, res) => {
     res.redirect("/user"); // Redirect non-admin user to user page
   }
 });
+
+// About Route
+app.get("/about", isLoggedIn, async (req, res) => {
+  let path = "";
+  let user = await User.findById(req.user._id);
+  res.render("about", { path  , user});
+});
 // Import Auth route
 const authRouter = require("./routes/auth");
 app.use("/auth", authRouter);
@@ -68,6 +75,7 @@ app.use("/user", userRouter);
 
 // Import Admin route
 const adminRouter = require("./routes/admin");
+const User = require("./models/user");
 app.use("/admin", adminRouter);
 
 // Set the port from environment variables or default to 3000

@@ -1,91 +1,168 @@
-/* Reset default margin and padding */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  font-family: "poppins";
 }
 
-/* Basic styling for header */
-.header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 0;
-    text-align: center;
+h2 {
+  text-align: center;
+  font-weight: 500;
 }
 
-.header .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+.filtering {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
-.header h1 {
-    margin: 0;
-    font-size: 2rem;
+.sorting-options form select{
+  background: transparent;
+  color: white;
+  padding: 3px 5px;
+  border-radius: 5px;
+  font-size: 15px;
 }
 
-/* Basic styling for navbar */
-.navbar {
-    background-color: #f0f0f0;
-    border-bottom: 1px solid #ccc;
+.sorting-options form select option{
+  background: #1c1c1c;
+  font-size: 15px;
 }
 
-.navbar .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 10px 20px;
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
-.navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.filter-buttons button {
+  border: none;
+  outline: none;
+  font-size: 18px;
+  background: #3b3b3b;
+  padding: 3px 10px;
+  border-radius: 5px;
 }
 
-.navbar ul li {
-    display: inline-block;
-    margin-right: 20px;
+.products {
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 10px 0 0 0;
 }
 
-.navbar ul li a {
-    text-decoration: none;
-    color: #333;
-    padding: 10px 15px;
-    font-size: 1.1rem;
+.product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 
-.navbar ul li a:hover {
-    background-color: #ddd;
-    color: #000;
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.navbar .search-form {
-    display: flex;
-    align-items: center;
+.image img {
+  border-radius: 15px;
+  width: 88vw;
+  height: 26vh;
+  object-fit: cover;
 }
 
-.navbar .search-form input[type="text"] {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 5px;
-    width: 200px;
-    font-size: 1rem;
+.info {
+  width: 100%;
+  padding: 0 20px 0 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: capitalize;
+  text-align: center;
+  gap: 10px;
 }
 
-.navbar .search-form button {
-    padding: 8px 15px;
-    border: none;
-    background-color: #4CAF50;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 1rem;
+.info h3 {
+  font-weight: 400;
+  width: 60%;
 }
 
-.navbar .search-form button:hover {
-    background-color: #45a049;
+.no-products p {
+  margin-top: 100px;
+  text-align: center;
+  font-size: 19px;
+  color: gray;
+}
+
+.search-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-box input {
+  width: 80%;
+  padding: 3px 10px;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1.2rem;
+  background: transparent;
+  border: 1px solid gray;
+  color: white;
+}
+
+.search-box button {
+  border: none;
+  outline: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pagination a {
+  text-decoration: none;
+  color: #fff;
+  margin: 0 5px;
+  padding: 12px 20px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+.pagination a:hover {
+  background-color: #f0f0f0;
+}
+.pagination a.active {
+  background-color: #d4af37;
+  color: #000;
+  pointer-events: none;
+}
+.pagination a.disabled {
+  color: #ccc;
+  pointer-events: none;
+}
+.pagination a.arrow {
+  padding: 8px 10px;
+}
+
+.container {
+  max-width: 96vw;
+  margin: 10px auto; 
+  margin-bottom: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
 }

@@ -34,18 +34,25 @@ const login = async (req, res) => {
 // Controller function for user registration
 const register = async (req, res) => {
   const { username, password, Role } = req.body;
+
   try {
+    // Set default role if Role is empty
+    const role = Role || "User";
+
     // Create a new user in the database
     const newUser = await userModel.create({
       username,
       password: await Bcrypt.hash(password, 10),
-      role: Role,
+      role: role,
     });
+
     req.flash("success_msg", "User Created successfully");
     res.redirect("/admin/users");
   } catch (err) {
     // Send error response if registration fails
+    console.error(err);
     req.flash("error_msg", "Error creating user : " + err.message);
+    res.redirect("/admin/users");
   }
 };
 

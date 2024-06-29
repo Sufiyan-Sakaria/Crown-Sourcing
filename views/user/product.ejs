@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= product.name %> | Crown Sourcing</title>
+    <link rel="stylesheet" href="/styles/partials/admin-navbar.css">
+    <link rel="stylesheet" href="/styles/partials/header.css">
+    <link rel="stylesheet" href="/styles/partials/flash.css">
+    <link rel="stylesheet" href="/styles/user/product.css">
+</head>
+<body>
+    <%- include('../partials/header.ejs')  %>
+    <%- include('../partials/navbar.ejs')  %>
+    <%- include('../partials/flash.ejs')  %>
+    <main>
+        <div class="img">
+            <img src="data:<%= product.image.contentType %>;base64,<%= product.image.data.toString('base64') %>" alt="Product Image">
+        </div>
+        <div class="info">
+            <h1><%= product.name %></h1>
+            <h2><%= product.description %></h2>
+            <p class="price">Rs : <%= product.price %> Only </p>
+            <p class="category">Category : <%= product.category %></p>
+            <p class="<%= product.stock ? "in-stock" : "out-of-stock" %>"><%= product.stock ? "Hurry up only " + product.stock + " pcs remaining" : "Sorry product is out of stock" %></p>
+        </div>
+        <form action="/user/cart/add" method="post">
+            <input type="hidden" name="productId" value="<%= product._id %>">
+            <input type="hidden" name="userId" value="<%= user._id %>">
+            <div class="quantity">
+                <div class="qty">
+                    <button type="button" id="decrement" onclick="decrementQty()">-</button>
+                    <input type="number" name="quantity" id="qty" value="01" min="01" max="<%= product.stock %>" required readonly>
+                    <button type="button" id="increment" onclick="incrementQty()">+</button>
+                </div>
+            </div>
+            <button type="submit">Add to Cart</button>
+        </form>
+    </main>
+    <script>
+        function incrementQty() {
+            var qtyInput = document.getElementById('qty');
+            var maxQty = parseInt(qtyInput.max);
+            var currentQty = parseInt(qtyInput.value);
+            if (currentQty < maxQty) {
+                qtyInput.value = (currentQty + 1).toString().padStart(2, '0');
+            }
+        }
+
+        function decrementQty() {
+            var qtyInput = document.getElementById('qty');
+            var minQty = parseInt(qtyInput.min);
+            var currentQty = parseInt(qtyInput.value);
+            if (currentQty > minQty) {
+                qtyInput.value = (currentQty - 1).toString().padStart(2, '0');
+            }
+        }
+    </script>
+</body>
+</html>

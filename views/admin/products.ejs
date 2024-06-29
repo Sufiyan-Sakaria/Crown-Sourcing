@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products | Crown Sourcing</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/partials/header.css" />
+    <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
+    <link rel="stylesheet" href="/styles/partials/flash.css" />
+    <link rel="stylesheet" href="/styles/admin/products.css" />
+  </head>
+  <body>
+    <%- include('../partials/header.ejs') %>
+    <%- include('../partials/admin-navbar.ejs') %>
+    <%- include('../partials/flash.ejs') %>
+    <div class="top">
+      <h2>List of All Products</h2>
+      <a href="/admin/product/add"><i class="ri-add-box-fill"></i></a>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons">
+      <p>Filter By Category :</p>
+      <button onclick="filterProducts('all')">All</button>
+      <button onclick="filterProducts('mix')">Mix</button>
+      <button onclick="filterProducts('acp')">ACP</button>
+    </div>
+
+    <% if (products.length) { %>
+    <div class="products">
+      <table class="roundedCorners">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% products.reverse().forEach((product, index) => { %>
+          <tr class="product" data-category="<%= product.category %>">
+            <td><%= index + 1 %></td>
+            <td><%= product.name %></td>
+            <td><%= product.stock %></td>
+            <td><%= product.price %></td>
+            <td>
+              <div class="actions">
+                <a class="edit" href="/admin/product/edit/<%= product._id %>"
+                  ><i class="ri-edit-box-line"></i
+                ></a>
+                <form
+                  action="/admin/product/delete/<%= product._id %>"
+                  method="post"
+                >
+                  <button type="submit" class="delete">
+                    <i class="ri-delete-bin-2-line"></i>
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <p class="end">End Of List</p>
+    <% } else { %>
+    <div class="no-products">
+      <p>No Products Found Yet.</p>
+      <a href="/admin/product/add">Create One</a>
+    </div>
+    <% } %>
+
+    <script>
+      function filterProducts(category) {
+        const products = document.querySelectorAll('.product');
+        products.forEach(product => {
+          if (category === 'all') {
+            product.style.display = 'table-row';
+          } else if (product.getAttribute('data-category') === category) {
+            product.style.display = 'table-row';
+          } else {
+            product.style.display = 'none';
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

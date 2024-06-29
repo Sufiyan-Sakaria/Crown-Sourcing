@@ -1,0 +1,61 @@
+*{
+    font-family: "poppins";
+}
+
+.about-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 96vw;
+    margin: 10px auto;
+    margin-bottom: 100px;
+}
+
+.about-container h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #d4af37;
+}
+
+.about-container p {
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.about-container h2 {
+    text-align: center;
+    width: 100%;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #d4af37;
+}
+
+.about-container address {
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.map-container {
+    width: 96%;
+}
+
+.numbers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    flex-direction: column;
+}
+
+.number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.number img {
+    width: 20px;
+}

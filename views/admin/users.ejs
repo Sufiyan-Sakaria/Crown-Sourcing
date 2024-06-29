@@ -14,29 +14,40 @@
     <link rel="stylesheet" href="/styles/admin/users.css" />
   </head>
   <body>
-    <%- include('../partials/header.ejs') %> <%-
-    include('../partials/admin-navbar.ejs') %> <%-
-    include('../partials/flash.ejs') %>
+    <%- include('../partials/header.ejs') %>
+    <%- include('../partials/admin-navbar.ejs') %>
+    <%- include('../partials/flash.ejs') %>
     <div class="top">
       <h2>List of All Users</h2>
       <a href="/auth/register"><i class="ri-add-box-fill"></i></a>
     </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons">
+      <p>Filter By Role :</p>
+      <button onclick="filterUsers('all')">All</button>
+      <button onclick="filterUsers('Admin')">Admin</button>
+      <button onclick="filterUsers('User')">User</button>
+    </div>
+
     <% if (users.length) { %>
     <div class="users">
       <table class="roundedCorners">
         <thead>
           <tr>
-            <th>No.</th>
+            <th>#</th>
             <th>Name</th>
+            <th>Balance</th>
             <th>Role</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <% users.forEach((user , index) => { %>
-          <tr>
-            <td><%= index +1 %></td>
+          <% users.reverse().forEach((user, index) => { %>
+          <tr class="user" data-role="<%= user.role %>">
+            <td><%= index + 1 %></td>
             <td><%= user.username %></td>
+            <td><%= user.balance.toLocaleString() %></td>
             <td><%= user.role %></td>
             <td>
               <div class="actions">
@@ -58,12 +69,27 @@
         </tbody>
       </table>
     </div>
-    <p>End Of List</p>
+    <p class="end">End Of List</p>
     <% } else { %>
     <div class="no-users">
       <p>No Users Found Yet.</p>
       <a href="/auth/register">Create One</a>
     </div>
     <% } %>
+
+    <script>
+      function filterUsers(role) {
+        const users = document.querySelectorAll('.user');
+        users.forEach(user => {
+          if (role === 'all') {
+            user.style.display = 'table-row';
+          } else if (user.getAttribute('data-role') === role) {
+            user.style.display = 'table-row';
+          } else {
+            user.style.display = 'none';
+          }
+        });
+      }
+    </script>
   </body>
 </html>

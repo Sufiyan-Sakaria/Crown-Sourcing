@@ -12,34 +12,38 @@ nav ul li {
 
 nav ul li a {
   text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 nav ul li a p {
   display: flex;
   flex-direction: column;
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
   display: none;
 }
 
-nav ul li a i {
-  font-size: 55px;
-  transition: 0.3s ease all;
-}
-
-i.active {
-  font-size: 55px;
-  font-weight: 600;
+img.active{
+  scale: 1.2;
 }
 
 p.active{
   display: block;
+  margin: 5px 0 3px 0;
 }
 
 nav {
   width: 100%;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   border-top: 3px solid #eee;
-  padding-top: 3px;
+  padding-top: 10px;
+  background: #1c1c1c;
+}
+
+nav.active {
+  padding: 10px 0;
 }

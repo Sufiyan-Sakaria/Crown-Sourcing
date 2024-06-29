@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment | Crown Sourcing</title>
+    <link rel="stylesheet" href="/styles/partials/flash.css" />
+    <link rel="stylesheet" href="/styles/partials/header.css" />
+    <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
+    <link rel="stylesheet" href="/styles/user/payment.css" />
+  </head>
+  <body>
+    <%- include('../partials/header.ejs') %> <%-
+    include('../partials/navbar.ejs') %> <%- include('../partials/flash.ejs') %>
+
+    <div class="container">
+      <div class="payment">
+        <h1>Make a Payment</h1>
+        <p>
+          Your current balance:
+          <strong>Rs: <%= user.balance.toLocaleString() %></strong>
+        </p>
+
+        <form
+          action="/user/payment/<%= user._id %>"
+          method="POST"
+          class="amount-form"
+        >
+          <div class="amount">
+            <label for="amount"><strong>Amount: </strong></label>
+            <input
+              type="text"
+              id="amount"
+              name="amount"
+              required
+              oninput="formatNumberInput(this)"
+            />
+          </div>
+          <button type="submit">Submit Payment</button>
+        </form>
+      </div>
+
+      <div class="previous">
+        <h2>Previous Payments</h2>
+        <% if (payments.length > 0) { %>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% payments.reverse().forEach(payment => { %>
+            <tr>
+              <td><%= payment.userPaymentId %></td>
+              <td>Rs: <%= payment.amount.toLocaleString() %></td>
+              <td class="<%= payment.status.toLowerCase() %>">
+                <%= payment.status %>
+              </td>
+              <td><%= formatDate(new Date(payment.createdAt)) %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } else { %>
+        <p>No previous payments found.</p>
+        <% } %>
+      </div>
+    </div>
+
+    <script>
+      function formatNumberInput(input) {
+        // Remove non-digit characters
+        let value = input.value.replace(/\D/g, "");
+
+        // Format with commas
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        // Update the input value
+        input.value = value;
+      }
+    </script>
+  </body>
+</html>

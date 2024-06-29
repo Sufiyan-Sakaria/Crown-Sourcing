@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile | Crown Sourcing</title>
+    <link rel="stylesheet" href="/styles/user/profile.css" />
+    <link rel="stylesheet" href="/styles/partials/header.css" />
+    <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
+    <link rel="stylesheet" href="/styles/partials/flash.css" />
+  </head>
+  <body>
+    <%- include('../partials/header') %> <%- include('../partials/navbar') %>
+    <%- include('../partials/flash') %>
+
+    <div class="profile-container">
+      <div class="user-info">
+        <h1><%= user.username %> Profile</h1>
+        <p>
+          <strong>Balance:</strong> Rs. <%= user.balance.toLocaleString() %>
+        </p>
+      </div>
+
+      <div class="recent-orders">
+        <h2>Recent Orders</h2>
+        <% if (recentOrders.length) { %>
+        <div class="orders">
+          <% recentOrders.forEach(order => { %>
+          <div class="order">
+            <h3>Order No <%= order.userOrderId %></h3>
+            <div class="table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="<%= order.status.toLowerCase() %>">
+                      <%= order.status %>
+                    </td>
+                    <td><%= formatDate(order.orderDate) %></td>
+                    <td>Rs : <%= order.total %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+        <a href="/user/orders/<%= user._id %>">Show All Orders</a>
+        <% } else { %>
+        <p>No recent orders found.</p>
+        <% } %>
+      </div>
+
+      <div class="recent-payments">
+        <h2>Recent Payments</h2>
+        <% if (recentPayments.length) { %>
+        <div class="payments">
+          <% recentPayments.forEach(payment => { %>
+          <div class="payment">
+            <h3>Payment No <%= payment.userPaymentId %></h3>
+            <div class="table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="<%= payment.status.toLowerCase() %>">
+                      <%= payment.status %>
+                    </td>
+                    <td><%= formatDate(payment.createdAt) %></td>
+                    <td>Rs : <%= payment.amount %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+        <a href="/user/payment/<%= user._id %>">Show All Payments</a>
+        <% } else { %>
+        <p>No recent payments found.</p>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>

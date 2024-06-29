@@ -27,20 +27,6 @@
             minlength="4"
             value="<%= user.username %>"
           />
-          <div class="password-input">
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Enter Password"
-              required
-              maxlength="32"
-              minlength="8"
-            />
-            <span class="toggle-password" onclick="togglePassword('password')">
-              <i id="password-icon" class="ri-eye-line"></i>
-            </span>
-          </div>
           <div class="Role">
             <label for="Role">Role : </label>
             <select name="Role" id="Role">
@@ -59,6 +45,5 @@
         </form>
       </div>
     </div>
-    <script src="/javascript/password.js"></script>
   </body>
 </html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Crown Source</title>
+    <link rel="stylesheet" href="/styles/admin/create-product.css" />
+  </head>
+  <body>
+    <div class="register-container">
+      <div class="register-box">
+        <div class="logo">
+          <img src="/images/logo.png" alt="Crown Source Logo" />
+        </div>
+        <h1>create new Product</h1>
+        <form action="/admin/product/add" method="post" enctype="multipart/form-data">
+          <input
+            type="text" 
+            name="name"
+            placeholder="Enter Product Name"
+            required
+          />
+          <textarea
+            name="description"
+            id="description"
+            placeholder="Enter Description"
+          ></textarea>
+          <div class="two">
+            <input type="number" name="price" placeholder="Price" required />
+            <input type="number" name="stock" placeholder="Stock" required />
+          </div>
+          <input type="file" accept="image/*" name="image">
+          <div class="category">
+            <label for="category">Category : </label>
+            <select name="category" id="category">
+              <option value="">Select A Category</option>
+              <option value="mix">MIX</option>
+              <option value="acp">ACP</option>
+            </select>
+          </div>
+          <button type="submit">Add Product</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
