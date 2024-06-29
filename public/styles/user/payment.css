@@ -7,7 +7,6 @@
 
 strong {
   font-weight: 600;
-  background: #3b3b3b;
 }
 
 .payment h1 {
@@ -15,7 +14,7 @@ strong {
   font-size: 1.6rem;
   font-weight: 500;
   color: #d4af37;
-  background: #3b3b3b;
+  background: transparent;
 }
 
 .container {
@@ -29,7 +28,6 @@ strong {
 }
 
 .payment {
-  background: #3b3b3b;
   width: 100%;
   border-radius: 10px;
   padding: 5px 10px;
