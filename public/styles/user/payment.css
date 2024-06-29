@@ -39,20 +39,20 @@ strong {
 }
 
 .amount {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
 }
 
 input[type="text"] {
-    width: 40vw;
+  width: 40vw;
   background-color: transparent;
   border: none;
   outline: none;
   border: 1px solid gray;
   color: #fff;
-  padding: 3px ;
+  padding: 3px;
   border-radius: 5px;
   font-size: 1rem;
 }
