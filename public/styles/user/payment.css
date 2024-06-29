@@ -3,11 +3,11 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "poppins";
-  background: transparent;
 }
 
 strong {
   font-weight: 600;
+  background: #3b3b3b;
 }
 
 .payment h1 {
@@ -15,7 +15,7 @@ strong {
   font-size: 1.6rem;
   font-weight: 500;
   color: #d4af37;
-  background: transparent;
+  background: #3b3b3b;
 }
 
 .container {
