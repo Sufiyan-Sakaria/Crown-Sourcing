@@ -7,6 +7,7 @@
 
 strong {
   font-weight: 600;
+  background: #313131;
 }
 
 .payment h1 {
@@ -14,7 +15,11 @@ strong {
   font-size: 1.6rem;
   font-weight: 500;
   color: #d4af37;
-  background: transparent;
+  background: #313131;
+}
+
+.payment p {
+  background: #313131;
 }
 
 .container {
@@ -35,6 +40,7 @@ strong {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  background: #313131;
   gap: 10px;
 }
 
@@ -42,6 +48,7 @@ strong {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #313131;
   gap: 15px;
 }
 
@@ -64,6 +71,7 @@ input[type="text"] {
   flex-direction: column;
   gap: 15px;
   margin-bottom: 10px;
+  background: #313131;
 }
 
 .amount-form button {

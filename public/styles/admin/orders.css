@@ -63,11 +63,13 @@ select.approved {
 }
 
 .order h2 {
+  background: #313131;
   font-size: 1.2rem;
   font-weight: 500;
 }
 
 .order form {
+  background: #313131;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -88,6 +90,7 @@ select.approved {
 .order table {
   width: 100%;
   border: 1px solid white;
+  background: #313131;
   border-collapse: collapse;
 }
 
