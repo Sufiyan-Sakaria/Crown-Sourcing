@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "poppins";
+  background: transparent;
 }
 
 strong {
@@ -14,6 +15,7 @@ strong {
   font-size: 1.6rem;
   font-weight: 500;
   color: #d4af37;
+  background: transparent;
 }
 
 .container {
