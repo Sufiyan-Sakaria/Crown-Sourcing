@@ -18,6 +18,7 @@ h3 {
 
 strong {
   font-weight: 600;
+  text-transform: capitalize;
 }
 
 select.pending {
@@ -175,4 +176,35 @@ form#limitForm select option {
   text-align: center;
   color: gray;
   margin-top: 50px;
+}
+
+#categoryFilterForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+#categoryFilterForm select {
+  background: transparent;
+  padding: 2px 3px;
+  border-radius: 5px;
+  color: white;
+}
+
+#categoryFilterForm select option {
+  background: #1c1c1c;
+  font-size: 1rem;
+}
+
+.forms {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.upper {
+  text-transform: uppercase;
 }

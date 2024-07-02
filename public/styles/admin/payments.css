@@ -24,8 +24,14 @@
   color: #d4af37;
 }
 
-table {
+.payments {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+table {
   border: 1px solid white;
   border-collapse: collapse;
 }
@@ -87,4 +93,23 @@ th {
   text-align: center;
   color: gray;
   margin-top: 50px;
+}
+
+.category-filter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.category-filter select {
+  background: transparent;
+  padding: 2px 3px;
+  color: white;
+  border-radius: 5px;
+}
+
+.category-filter select option {
+  background: #1c1c1c;
+  font-size: 1rem;
 }

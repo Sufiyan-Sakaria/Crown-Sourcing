@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= user.username %> Orders | Crown Sourcing</title>
+    <title><%= user?.username || 'User' %> Orders | Crown Sourcing</title>
     <link rel="stylesheet" href="/styles/partials/flash.css" />
     <link rel="stylesheet" href="/styles/partials/header.css" />
     <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
@@ -14,93 +14,99 @@
     <%- include('../partials/navbar.ejs') %>
     <%- include('../partials/flash.ejs') %>
 
-    <h1><%= user.username %> Orders</h1>
-    
+    <h1><%= user?.username || 'User' %> Orders</h1>
 
-    <% if (orders.length > 0) { %>
-        <!-- Form to change items per page limit -->
-        <form method="GET" action="/user/orders/<%= user._id %>" id="limitForm">
-            <label for="limit">Orders per page:</label>
-            <select name="limit" id="limit" onchange="document.getElementById('limitForm').submit(); document.getElementById('page').value = 1">
-                <option value="2" <%= limit === 2 ? 'selected' : '' %>>2</option>
-                <option value="5" <%= limit === 5 ? 'selected' : '' %>>5</option>
-                <option value="10" <%= limit === 10 ? 'selected' : '' %>>10</option>
-                <option value="20" <%= limit === 20 ? 'selected' : '' %>>20</option>
-                <option value="50" <%= limit === 50 ? 'selected' : '' %>>50</option>
-                <!-- Add more options as needed -->
-            </select>
-            <input type="hidden" name="page" value="<%= currentPage %>" id="page">
-        </form>
+    <!-- Category Filter Form -->
+    <form method="GET" action="/user/orders/<%= user?._id %>" id="categoryFilterForm">
+        <label for="category">Filter by Category :</label>
+        <select name="category" id="category" onchange="document.getElementById('categoryFilterForm').submit()">
+            <option value="">All</option>
+            <option value="acp" <%= category === 'acp' ? 'selected' : '' %>>ACP</option>
+            <option value="mix" <%= category === 'mix' ? 'selected' : '' %>>Mix</option>
+            <!-- Add more options as needed -->
+        </select>
+        <input type="hidden" name="page" value="<%= currentPage || 1 %>" id="page">
+        <input type="hidden" name="limit" value="<%= limit || 10 %>" id="limit">
+    </form>
 
-          <div class="container">
-        <div class="orders">
-            <% orders.reverse().forEach((order, index) => { %>
-            <div class="order">
-                <div class="top">
-                    <h2>Order No <%= (currentPage - 1) * limit + index + 1 %></h2>
-                    <p>
-                        <strong>Status : </strong>
-                        <span class="<%= order.status.toLowerCase() %>"><%= order.status %></span>
-                    </p>
-                </div>
-                <p class="date">
-                    <strong>Date:</strong> <%= order.orderDate.toDateString() %>
-                </p>
-                <h3>Products List</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Qty</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% let totalQty = 0; %>
-                        <% order.items.forEach((item, itemIndex) => { %>
-                        <% totalQty += item.quantity; %>
-                        <tr>
-                            <td><%= itemIndex + 1 %>.</td>
-                            <td><%= item.productId.name %></td>
-                            <td><%= item.quantity %></td>
-                            <td><%= (item.productId.price * item.quantity) %></td>
-                        </tr>
-                        <% }); %>
-                        <tr>
-                            <td colspan="2"><strong>Grand Total</strong></td>
-                            <td><strong><%= totalQty %></strong></td>
-                            <td><strong><%= order.total %></strong></td>
-                        </tr>
-                    </tbody>
-                </table>
+    <% if (orders && orders.length > 0) { %>
+        <!-- Orders List -->
+        <div class="container">
+            <div class="orders">
+                <% orders.reverse().forEach((order, index) => { %>
+                    <div class="order">
+                        <div class="top">
+                            <h2>Order No <%= order.userOrderId %></h2> <!-- Display userOrderId instead of calculated index -->
+                            <p>
+                                <strong>Status : </strong>
+                                <span class="<%= order.status.toLowerCase() %>"><%= order.status %></span>
+                            </p>
+                        </div>
+                        <p class="date">
+                            <strong>Date:</strong> <%= order.orderDate ? order.orderDate.toDateString() : 'N/A' %>
+                        </p>
+                        <p>
+                            <strong>Category : </strong>
+                            <%= order.category === 'acp' ? 'ACP' : (order.category === 'mix' ? 'Mix' : 'Unknown') %>
+                            <!-- Adjust as per your category names -->
+                        </p>
+                        <h3>Products List</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% let totalQty = 0; %>
+                                <% order.items?.forEach((item, itemIndex) => { %>
+                                    <% totalQty += item.quantity; %>
+                                    <tr>
+                                        <td><%= itemIndex + 1 %>.</td>
+                                        <td><%= item.productId?.name || 'Unknown' %></td>
+                                        <td><%= item.quantity %></td>
+                                        <td><%= (item.productId?.price * item.quantity) %></td>
+                                    </tr>
+                                <% }); %>
+                                <tr>
+                                    <td colspan="2"><strong>Grand Total</strong></td>
+                                    <td><strong><%= totalQty %></strong></td>
+                                    <td><strong><%= order.total %></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                <% }); %>
             </div>
-            <% }); %>
+
+            <!-- Pagination Controls -->
+            <% if (totalPages && totalPages !== 1) { %>
+                <div class="pagination">
+                    <% if (currentPage > 1) { %>
+                        <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>&category=<%= category %>" class="arrow">« </a>
+                    <% } else { %>
+                        <a class="arrow disabled">« </a>
+                    <% } %>
+
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <a href="?page=<%= i %>&limit=<%= limit %>&category=<%= category %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
+                    <% } %>
+
+                    <% if (currentPage < totalPages) { %>
+                        <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>&category=<%= category %>" class="arrow"> »</a>
+                    <% } else { %>
+                        <a class="arrow disabled"> »</a>
+                    <% } %>
+                </div>
+            <% } %>
+            
+            <p class="end-of-list">End of List</p>
         </div>
-      <!-- Pagination Controls -->
-      <% if (totalPages !== 1) { %>
-        <div class="pagination">
-          <% if (currentPage > 1) { %>
-              <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>" class="arrow">« </a>
-          <% } else { %>
-              <a class="arrow disabled">« </a>
-          <% } %>
-  
-          <% for (let i = 1; i <= totalPages; i++) { %>
-              <a href="?page=<%= i %>&limit=<%= limit %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
-          <% } %>
-  
-          <% if (currentPage < totalPages) { %>
-              <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>" class="arrow"> »</a>
-          <% } else { %>
-              <a class="arrow disabled"> »</a>
-          <% } %>
-      </div>
-      <% } %>
-        <p class="end-of-list">End of List</p>
-      </div>
-        <% } else { %>
+    <% } else { %>
         <p class="end">You have no orders.</p>
-        <% } %>
+    <% } %>
 </body>
 </html>

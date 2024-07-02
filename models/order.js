@@ -31,6 +31,7 @@ const orderSchema = new mongoose.Schema({
     default: "Pending",
   },
   orderDate: { type: Date, default: Date.now },
+  category: { type: String, required: true }, // Add category field
 });
 
 const Order = mongoose.model("Order", orderSchema);

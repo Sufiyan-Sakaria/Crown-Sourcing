@@ -30,6 +30,7 @@ strong {
   gap: 15px;
   flex-direction: column;
   margin: 15px auto;
+  margin-bottom: 110px;
 }
 
 .payment {
@@ -110,7 +111,7 @@ th,
 td {
   border: 1px solid white;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   padding: 3px;
 }
 

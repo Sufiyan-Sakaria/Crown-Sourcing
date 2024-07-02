@@ -11,29 +11,30 @@ h1 {
   font-weight: 500;
 }
 
-.buttons {
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-}
-
-.buttons button {
-  border: none;
-  outline: none;
-  font-size: 18px;
-  background: #3b3b3b;
-  padding: 3px 10px;
-  border-radius: 5px;
-}
-
 .cart-items {
-  margin: 25px 2vw;
+  margin: 5px auto;
+  margin-bottom: 110px;
   max-width: 96vw;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.acp,
+.mix {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.acp h2,
+.mix h2 {
+  font-weight: 500;
+  color: #d4af37;
 }
 
 table {
@@ -72,16 +73,15 @@ form button {
   font-size: 1.35rem;
 }
 
-.checkout{
+.checkout {
   padding: 5px 8px;
   background: #d4af37;
-  margin-top: 15px;
   border-radius: 5px;
   font-size: 1.2rem;
   color: black;
 }
 
-.end{
+.end {
   text-align: center;
 }
 
@@ -97,7 +97,7 @@ a.continue:active {
   text-decoration: underline;
 }
 
-.empty{
+.empty {
   text-align: center;
   margin-top: 120px;
   display: flex;
@@ -105,11 +105,11 @@ a.continue:active {
   gap: 10px;
 }
 
-.empty p{
+.empty p {
   color: gray;
 }
 
-#qty button{
+#qty button {
   border: none;
   outline: none;
   padding: 2px 3px;

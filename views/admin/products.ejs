@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="/styles/admin/products.css" />
   </head>
   <body>
-    <%- include('../partials/header.ejs') %>
-    <%- include('../partials/admin-navbar.ejs') %>
-    <%- include('../partials/flash.ejs') %>
+    <%- include('../partials/header.ejs') %> <%-
+    include('../partials/admin-navbar.ejs') %> <%-
+    include('../partials/flash.ejs') %>
     <div class="top">
       <h2>List of All Products</h2>
       <a href="/admin/product/add"><i class="ri-add-box-fill"></i></a>
@@ -51,6 +51,9 @@
             <td><%= product.price %></td>
             <td>
               <div class="actions">
+                <a href="/user/product/<%= product._id %>"
+                  ><i class="ri-eye-fill"></i
+                ></a>
                 <a class="edit" href="/admin/product/edit/<%= product._id %>"
                   ><i class="ri-edit-box-line"></i
                 ></a>
@@ -79,14 +82,14 @@
 
     <script>
       function filterProducts(category) {
-        const products = document.querySelectorAll('.product');
-        products.forEach(product => {
-          if (category === 'all') {
-            product.style.display = 'table-row';
-          } else if (product.getAttribute('data-category') === category) {
-            product.style.display = 'table-row';
+        const products = document.querySelectorAll(".product");
+        products.forEach((product) => {
+          if (category === "all") {
+            product.style.display = "table-row";
+          } else if (product.getAttribute("data-category") === category) {
+            product.style.display = "table-row";
           } else {
-            product.style.display = 'none';
+            product.style.display = "none";
           }
         });
       }

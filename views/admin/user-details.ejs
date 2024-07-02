@@ -7,17 +7,19 @@
     <link rel="stylesheet" href="/styles/partials/header.css" />
     <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
     <link rel="stylesheet" href="/styles/partials/flash.css" />
-    <link rel="stylesheet" href="/styles/user/profile.css" />
+    <link rel="stylesheet" href="/styles/admin/user-details.css" />
   </head>
   <body>
     <%- include('../partials/header.ejs') %> <%-
-    include('../partials/navbar.ejs') %> <%- include('../partials/flash.ejs') %>
+    include('../partials/admin-navbar.ejs') %> <%-
+    include('../partials/flash.ejs') %>
 
     <div class="profile-container">
-      <h2><%= user.username %> Profile</h2>
+      <h2>User Details</h2>
       <% if (user) { %>
       <div class="user-info">
         <p><strong>Name:</strong> <%= user.username %></p>
+        <p><strong>Role:</strong> <%= user.role %></p>
         <p>
           <strong>ACP Balance:</strong> <%= user.balanceACP.toLocaleString() %>
         </p>
@@ -31,10 +33,7 @@
       </div>
 
       <div class="recent-payments">
-        <div class="head">
-          <h3>Recent Payments</h3>
-          <a href="/user/payment/<%= user._id %>">Show All</a>
-        </div>
+        <h3>Recent Payments</h3>
         <% if (user.payments && user.payments.length > 0) { %>
         <div class="payments">
           <% user.payments.forEach(payment => { %>
@@ -73,10 +72,7 @@
       </div>
 
       <div class="recent-orders">
-        <div class="head">
-          <h3>Recent Orders</h3>
-          <a href="/user/orders/<%= user._id %>">Show All</a>
-        </div>
+        <h3>Recent Orders</h3>
         <% if (user.orders && user.orders.length > 0) { %>
         <div class="orders">
           <% user.orders.forEach(order => { %>
@@ -119,7 +115,11 @@
         <p>User not found.</p>
       </div>
       <% } %> <% if (user && user.payments.length === 0 && user.orders.length
-      === 0) { %> <% } %>
+      === 0) { %>
+      <div class="error">
+        <p>No recent payments or orders found.</p>
+      </div>
+      <% } %>
     </div>
   </body>
 </html>

@@ -24,7 +24,9 @@
             ></path>
           </g>
         </svg>
-        <p class="<%= path === '/admin/users' ? 'active' : '' %>">Users</p>
+        <p class="<%= path.startsWith('/admin/users') ? 'active' : '' %>">
+          Users
+        </p>
       </a>
     </li>
     <li>
@@ -50,7 +52,7 @@
             ></path>
           </g>
         </svg>
-        <p class="<%= path === '/admin/products' ? 'active' : '' %>">
+        <p class="<%= path.startsWith('/admin/products') ? 'active' : '' %>">
           Products
         </p>
       </a>
@@ -129,7 +131,9 @@
             ></path>
           </g>
         </svg>
-        <p class="<%= path === '/admin/orders' ? 'active' : '' %>">Orders</p>
+        <p class="<%= path.startsWith('/admin/orders') ? 'active' : '' %>">
+          Orders
+        </p>
       </a>
     </li>
     <li>
@@ -157,7 +161,7 @@
             ></path>
           </g>
         </svg>
-        <p class="<%= path === '/admin/payments' ? 'active' : '' %>">
+        <p class="<%= path.startsWith('/admin/payments') ? 'active' : '' %>">
           Payments
         </p>
       </a>

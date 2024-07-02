@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="/styles/admin/users.css" />
   </head>
   <body>
-    <%- include('../partials/header.ejs') %>
-    <%- include('../partials/admin-navbar.ejs') %>
-    <%- include('../partials/flash.ejs') %>
+    <%- include('../partials/header.ejs') %> <%-
+    include('../partials/admin-navbar.ejs') %> <%-
+    include('../partials/flash.ejs') %>
     <div class="top">
       <h2>List of All Users</h2>
       <a href="/auth/register"><i class="ri-add-box-fill"></i></a>
@@ -37,7 +37,6 @@
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Balance</th>
             <th>Role</th>
             <th>Actions</th>
           </tr>
@@ -47,17 +46,16 @@
           <tr class="user" data-role="<%= user.role %>">
             <td><%= index + 1 %></td>
             <td><%= user.username %></td>
-            <td><%= user.balance.toLocaleString() %></td>
             <td><%= user.role %></td>
             <td>
               <div class="actions">
+                <a href="/admin/users/details/<%= user._id %>"
+                  ><i class="ri-eye-fill"></i
+                ></a>
                 <a class="edit" href="/admin/user/edit/<%= user._id %>"
                   ><i class="ri-edit-box-line"></i
                 ></a>
-                <form
-                  action="/admin/user/delete/<%= user._id %>"
-                  method="post"
-                >
+                <form action="/admin/user/delete/<%= user._id %>" method="post">
                   <button type="submit" class="delete">
                     <i class="ri-delete-bin-2-line"></i>
                   </button>
@@ -79,17 +77,18 @@
 
     <script>
       function filterUsers(role) {
-        const users = document.querySelectorAll('.user');
-        users.forEach(user => {
-          if (role === 'all') {
-            user.style.display = 'table-row';
-          } else if (user.getAttribute('data-role') === role) {
-            user.style.display = 'table-row';
+        const users = document.querySelectorAll(".user");
+        users.forEach((user) => {
+          if (role === "all") {
+            user.style.display = "table-row";
+          } else if (user.getAttribute("data-role") === role) {
+            user.style.display = "table-row";
           } else {
-            user.style.display = 'none';
+            user.style.display = "none";
           }
         });
       }
     </script>
   </body>
 </html>
+-

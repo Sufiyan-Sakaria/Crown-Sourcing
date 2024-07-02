@@ -28,6 +28,44 @@ router.get("/users", isLoggedIn, isAdmin, async (req, res) => {
   res.render("admin/users", { user, users, path });
 });
 
+router.get("/users/details/:id", async (req, res) => {
+  try {
+    // Function to format date as "YYYY-MM-DD HH:mm:ss"
+    function formatDate(date) {
+      const d = new Date(date);
+      const year = d.getFullYear();
+      const month = ("0" + (d.getMonth() + 1)).slice(-2);
+      const day = ("0" + d.getDate()).slice(-2);
+
+      return `${day}-${month}-${year}`;
+    }
+
+    let path = req.originalUrl;
+    const userId = req.params.id;
+    const user = await userModel
+      .findById(userId)
+      .populate({
+        path: "payments",
+        options: { sort: { createdAt: -1 }, limit: 2 },
+      })
+      .populate({
+        path: "orders",
+        options: { sort: { orderDate: -1 }, limit: 2 },
+      });
+
+    if (!user) {
+      req.flash("error_msg", "User not found");
+      return res.redirect("/admin/users");
+    }
+
+    res.render("admin/user-details", { user, path, formatDate });
+  } catch (err) {
+    console.error(err);
+    req.flash("error_msg", "Failed to fetch user details" + err.message);
+    res.redirect("/admin/users");
+  }
+});
+
 // Route to render the edit the user
 router.get("/user/edit/:id", isLoggedIn, isAdmin, async (req, res) => {
   try {
@@ -208,10 +246,16 @@ router.get("/orders", isLoggedIn, isAdmin, async (req, res) => {
     let path = req.originalUrl;
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10; // Default limit of items per page
+    const category = req.query.category || ""; // Get category filter
 
-    const count = await orderModel.countDocuments();
+    let filter = {};
+    if (category) {
+      filter.category = category;
+    }
+
+    const count = await orderModel.countDocuments(filter);
     const orders = await orderModel
-      .find()
+      .find(filter)
       .populate("user")
       .populate("items.productId")
       .sort({ createdAt: -1 }) // Optional: sort by creation date or any other field
@@ -225,6 +269,7 @@ router.get("/orders", isLoggedIn, isAdmin, async (req, res) => {
       totalPages: Math.ceil(count / limit),
       limit,
       totalOrders: count,
+      selectedCategory: category, // Pass selected category to template
     });
   } catch (error) {
     req.flash("error_msg", "Failed to load orders: " + error.message);
@@ -282,74 +327,65 @@ router.post(
 );
 
 // Route for admins to manage payments
-router.get("/payments", async (req, res) => {
+router.get("/payments", isLoggedIn, isAdmin, async (req, res) => {
+  const { category } = req.query;
+  const query = category ? { category } : {};
+  const path = req.originalUrl;
   try {
-    let path = req.originalUrl;
-    const payments = await paymentModel.find().populate("user");
-
-    res.render("admin/payments", { payments, path });
-  } catch (err) {
-    console.error(err);
-    req.flash("error_msg", "Failed to fetch payments: " + err.message);
+    const payments = await paymentModel.find(query).populate("user").exec();
+    res.render("admin/payments", {
+      payments,
+      selectedCategory: category,
+      path,
+    });
+  } catch (error) {
+    req.flash("error_,msg", "Failed to retrieve payments");
     res.redirect("/admin");
   }
 });
 
-router.post("/payments/:id/approve", async (req, res) => {
+router.post("/payments/:id/approve", isLoggedIn, isAdmin, async (req, res) => {
+  const { id } = req.params;
   try {
-    const paymentId = req.params.id;
-    const payment = await paymentModel.findById(paymentId).populate("user");
+    const payment = await paymentModel.findById(id).populate("user").exec();
+    if (payment.status === "Pending") {
+      payment.status = "Approved";
+      await payment.save();
 
-    if (!payment) {
-      req.flash("error_msg", "Payment not found");
-      return res.redirect("/admin/payments");
+      // Update user balance based on payment category
+      if (payment.category === "ACP") {
+        payment.user.balanceACP -= payment.amount;
+      } else if (payment.category === "Mix") {
+        payment.user.balanceMix -= payment.amount;
+      }
+      await payment.user.save();
+
+      req.flash("success_msg", "Payment approved successfully");
+    } else {
+      req.flash("error_msg", "Payment has already been processed");
     }
-
-    if (payment.status === "Approved") {
-      req.flash("error_msg", "Payment already approved");
-      return res.redirect("/admin/payments");
-    }
-
-    payment.status = "Approved";
-    await payment.save();
-
-    payment.user.balance -= payment.amount;
-    await payment.user.save();
-
-    req.flash("success_msg", "Payment approved and balance updated");
-    res.redirect("/admin/payments");
-  } catch (err) {
-    console.error(err);
-    req.flash("error_msg", "Failed to approve payment: " + err.message);
-    res.redirect("/admin/payments");
+  } catch (error) {
+    req.flash("error_msg", "Failed to approve payment " + error.message);
   }
+  res.redirect("/admin/payments");
 });
 
-router.post("/payments/:id/reject", async (req, res) => {
+router.post("/payments/:id/reject", isLoggedIn, isAdmin, async (req, res) => {
+  const { id } = req.params;
   try {
-    const paymentId = req.params.id;
-    const payment = await paymentModel.findById(paymentId).populate("user");
+    const payment = await paymentModel.findById(id).populate("user").exec();
+    if (payment.status === "Pending") {
+      payment.status = "Rejected";
+      await payment.save();
 
-    if (!payment) {
-      req.flash("error_msg", "Payment not found");
-      return res.redirect("/admin/payments");
+      req.flash("success_msg", "Payment rejected successfully");
+    } else {
+      req.flash("error_msg", "Payment has already been processed");
     }
-
-    if (payment.status === "Rejected") {
-      req.flash("error_msg", "Payment already rejected");
-      return res.redirect("/admin/payments");
-    }
-
-    payment.status = "Rejected";
-    await payment.save();
-
-    req.flash("success_msg", "Payment rejected");
-    res.redirect("/admin/payments");
-  } catch (err) {
-    console.error(err);
-    req.flash("error_msg", "Failed to reject payment: " + err.message);
-    res.redirect("/admin/payments");
+  } catch (error) {
+    req.flash("error_msg", "Failed to reject payment " + error.message);
   }
+  res.redirect("/admin/payments");
 });
 
 module.exports = router;

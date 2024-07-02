@@ -14,29 +14,55 @@
     include('../partials/navbar.ejs') %> <%- include('../partials/flash.ejs') %>
 
     <div class="container">
+      <!-- Payment section for ACP -->
       <div class="payment">
-        <h1>Make a Payment</h1>
+        <h1>Make a Payment for ACP</h1>
         <p>
-          Your current balance:
-          <strong>Rs: <%= user.balance.toLocaleString() %></strong>
+          Your current balance: <strong>ACP: Rs <%= user.balanceACP %></strong>
         </p>
 
         <form
-          action="/user/payment/<%= user._id %>"
+          action="/user/payment/acp/<%= user._id %>"
           method="POST"
           class="amount-form"
         >
           <div class="amount">
-            <label for="amount"><strong>Amount: </strong></label>
+            <label for="amountACP"><strong>Amount: </strong></label>
             <input
               type="text"
-              id="amount"
-              name="amount"
+              id="amountACP"
+              name="amountACP"
               required
               oninput="formatNumberInput(this)"
             />
           </div>
-          <button type="submit">Submit Payment</button>
+          <button type="submit">Submit Payment for ACP</button>
+        </form>
+      </div>
+
+      <!-- Payment section for Mix -->
+      <div class="payment">
+        <h1>Make a Payment for Mix</h1>
+        <p>
+          Your current balance: <strong>Mix: Rs <%= user.balanceMix %></strong>
+        </p>
+
+        <form
+          action="/user/payment/mix/<%= user._id %>"
+          method="POST"
+          class="amount-form"
+        >
+          <div class="amount">
+            <label for="amountMix"><strong>Amount: </strong></label>
+            <input
+              type="text"
+              id="amountMix"
+              name="amountMix"
+              required
+              oninput="formatNumberInput(this)"
+            />
+          </div>
+          <button type="submit">Submit Payment for Mix</button>
         </form>
       </div>
 
@@ -48,6 +74,7 @@
             <tr>
               <th>#</th>
               <th>Amount</th>
+              <th>Cat</th>
               <th>Status</th>
               <th>Date</th>
             </tr>
@@ -56,7 +83,8 @@
             <% payments.reverse().forEach(payment => { %>
             <tr>
               <td><%= payment.userPaymentId %></td>
-              <td>Rs: <%= payment.amount.toLocaleString() %></td>
+              <td><%= payment.amount.toLocaleString() %></td>
+              <td><%= payment.category %></td>
               <td class="<%= payment.status.toLowerCase() %>">
                 <%= payment.status %>
               </td>
@@ -65,6 +93,7 @@
             <% }) %>
           </tbody>
         </table>
+        <p style="color: white">End of List</p>
         <% } else { %>
         <p>No previous payments found.</p>
         <% } %>

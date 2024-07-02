@@ -16,73 +16,143 @@
   <body>
     <%- include('../partials/header.ejs') %> <%-
     include('../partials/navbar.ejs') %> <%- include('../partials/flash.ejs') %>
-    <% if (filteredItems.length > 0) { %>
+    <% if (cartItem.length > 0) { %>
     <h1><%= user.username %> Cart</h1>
-    <div class="buttons">
-      <button onclick="filterCategory('')">ALL</button>
-      <button onclick="filterCategory('mix')">MIX</button>
-      <button onclick="filterCategory('acp')">ACP</button>
+
+    <div class="cart-items">
+      <% if (acpProducts.length) { %>
+      <div class="acp">
+        <h2>Acp Products</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Del</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% let totalQtyAcp = 0; let grandTotalAcp = 0;
+            acpProducts.forEach(item => { totalQtyAcp += item.quantity; let
+            totalAmount = item.productId.price * item.quantity; grandTotalAcp +=
+            totalAmount; %>
+            <tr>
+              <td><%= item.productId.name %></td>
+              <td><%= item.productId.price.toLocaleString() %></td>
+              <td id="qty">
+                <button
+                  onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', -1, 'acp', <%= item.productId.stock %>)"
+                >
+                  -
+                </button>
+                <span id="quantity-<%= item.productId._id %>"
+                  ><%= item.quantity %></span
+                >
+                <button
+                  onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', 1, 'acp', <%= item.productId.stock %>)"
+                >
+                  +
+                </button>
+              </td>
+              <td id="total-<%= item.productId._id %>"><%= totalAmount %></td>
+              <td>
+                <form
+                  action="/user/cart/delete/<%= item.productId._id %>/<%= user._id %>"
+                  method="post"
+                >
+                  <button type="submit" class="delete">
+                    <i class="ri-delete-bin-2-line"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+            <tr class="total">
+              <td colspan="2">Grand Total</td>
+              <td id="totalQuantityAcp"><%= totalQtyAcp %></td>
+              <td colspan="2" id="grandTotalAcp"><%= grandTotalAcp %></td>
+            </tr>
+          </tbody>
+        </table>
+        <form
+          action="/user/checkout/<%= user._id %>/?category=acp"
+          method="post"
+        >
+          <button type="submit" class="checkout">Proceed To Checkout</button>
+        </form>
+      </div>
+      <% } %> <% if (mixProducts.length) { %>
+      <div class="mix">
+        <h2>Mix Products</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Del</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% let totalQtyMix = 0; let grandTotalMix = 0;
+            mixProducts.forEach(item => { totalQtyMix += item.quantity; let
+            totalAmount = item.productId.price * item.quantity; grandTotalMix +=
+            totalAmount; %>
+            <tr>
+              <td><%= item.productId.name %></td>
+              <td><%= item.productId.price.toLocaleString() %></td>
+              <td id="qty">
+                <button
+                  onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', -1, 'mix', <%= item.productId.stock %>)"
+                >
+                  -
+                </button>
+                <span id="quantity-<%= item.productId._id %>"
+                  ><%= item.quantity %></span
+                >
+                <button
+                  onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', 1, 'mix', <%= item.productId.stock %>)"
+                >
+                  +
+                </button>
+              </td>
+              <td id="total-<%= item.productId._id %>"><%= totalAmount %></td>
+              <td>
+                <form
+                  action="/user/cart/delete/<%= item.productId._id %>/<%= user._id %>"
+                  method="post"
+                >
+                  <button type="submit" class="delete">
+                    <i class="ri-delete-bin-2-line"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+            <tr class="total">
+              <td colspan="2">Grand Total</td>
+              <td id="totalQuantityMix"><%= totalQtyMix %></td>
+              <td colspan="2" id="grandTotalMix"><%= grandTotalMix %></td>
+            </tr>
+          </tbody>
+        </table>
+        <form
+          action="/user/checkout/<%= user._id %>/?category=mix"
+          method="post"
+        >
+          <button type="submit" class="checkout">Proceed To Checkout</button>
+        </form>
+      </div>
+      <% } %>
+
+      <div class="end">
+        <a href="/user" class="continue">Continue Shopping</a>
+      </div>
     </div>
 
-    <!-- Cart Items -->
-    <div class="cart-items">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th>Del</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% let grandTotal = 0; let totalQuantity = 0; %> <%
-          filteredItems.forEach(function(item) { %> <% let total =
-          item.productId.price * item.quantity; %> <% grandTotal += total; %> <%
-          totalQuantity += item.quantity; %>
-          <tr>
-            <td><%= item.productId.name %></td>
-            <td><%= item.productId.price %></td>
-            <td id="qty">
-              <button
-                onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', -1)"
-              >
-                -
-              </button>
-              <span id="quantity-<%= item.productId._id %>"
-                ><%= item.quantity %></span
-              >
-              <button
-                onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', 1)"
-              >
-                +
-              </button>
-            </td>
-            <td id="total-<%= item.productId._id %>"><%= total %></td>
-            <td>
-              <form action="/admin/user/delete/<%= user._id %>" method="post">
-                <button type="submit" class="delete">
-                  <i class="ri-delete-bin-2-line"></i>
-                </button>
-              </form>
-            </td>
-          </tr>
-          <% }); %>
-          <tr class="total">
-            <td colspan="2">Grand Total</td>
-            <td id="totalQuantity"><%= totalQuantity %></td>
-            <td colspan="2" id="grandTotal"><%= grandTotal %></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="end">
-      <a href="/user" class="continue">Continue Shopping</a>
-    </div>
-    <form action="/user/checkout/<%= user._id %>" method="post">
-      <button type="submit" class="checkout">Proceed To Checkout</button>
-    </form>
     <% } else { %>
     <div class="empty">
       <p>Your cart is empty.</p>
@@ -91,19 +161,17 @@
     <% } %>
 
     <script>
-      function filterCategory(category) {
-        category
-          ? (window.location.href = "/user/cart/<%= user._id %>?c=" + category)
-          : (window.location.href = "/user/cart/<%= user._id %>");
-      }
-
-      function updateQuantity(productId, userId, change) {
+      function updateQuantity(productId, userId, change, category, stock) {
         const quantityElement = document.getElementById(
           `quantity-${productId}`
         );
         const totalElement = document.getElementById(`total-${productId}`);
-        const grandTotalElement = document.getElementById("grandTotal");
-        const totalQuantityElement = document.getElementById("totalQuantity");
+        const grandTotalElement = document.getElementById(
+          category === "acp" ? "grandTotalAcp" : "grandTotalMix"
+        );
+        const totalQuantityElement = document.getElementById(
+          category === "acp" ? "totalQuantityAcp" : "totalQuantityMix"
+        );
 
         if (
           !quantityElement ||
@@ -115,8 +183,16 @@
           return;
         }
 
-        const newQuantity = parseInt(quantityElement.innerText) + change;
-        if (newQuantity < 1) return;
+        const currentQuantity = parseInt(quantityElement.innerText);
+        const newQuantity = currentQuantity + change;
+        if (newQuantity < 1) {
+          alert("Quantity cannot be less than 1.");
+          return;
+        }
+        if (newQuantity > stock) {
+          alert("Quantity cannot be greater than stock (" + stock + ").");
+          return;
+        }
 
         fetch(`/user/cart/update`, {
           method: "POST",
@@ -127,22 +203,25 @@
             productId,
             userId,
             quantity: newQuantity,
+            category: category,
           }),
         })
           .then((response) => response.json())
           .then((data) => {
             if (data.success) {
               quantityElement.innerText = newQuantity;
-              totalElement.innerText = data.updatedTotal;
-              grandTotalElement.innerText = data.updatedGrandTotal;
+              totalElement.innerText = data.updatedTotal.toLocaleString();
+              grandTotalElement.innerText =
+                data.updatedGrandTotal.toLocaleString();
               totalQuantityElement.innerText = data.updatedTotalQuantity;
             } else {
-              console.log(data); // Log the error response for debugging
+              console.error("Failed to update quantity:", data.error);
+              alert("Failed to update quantity: " + data.error);
             }
           })
           .catch((error) => {
             console.error("Error:", error);
-            alert("Failed to update quantity" + error.message);
+            alert("Failed to update quantity: " + error.message);
           });
       }
     </script>

@@ -35,7 +35,7 @@ h1 {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   background: #313131;
   border-radius: 10px;
   padding: 15px 10px;
@@ -164,4 +164,23 @@ form#limitForm select option {
   text-align: center;
   color: gray;
   margin-top: 50px;
+}
+
+#categoryFilterForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;  
+}
+
+#categoryFilterForm select {
+  background: transparent;
+  padding: 2px 3px;
+  border-radius: 5px;
+  color: white;
+}
+
+#categoryFilterForm select option {
+  background: #1c1c1c;
+  font-size: 1rem;
 }

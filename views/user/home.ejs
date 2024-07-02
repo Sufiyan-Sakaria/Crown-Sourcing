@@ -71,11 +71,6 @@
         </a>
         <% }) %>
       </div>
-      <% } else { %>
-      <div class="no-products">
-        <p>Products not Found.</p>
-      </div>
-      <% } %>
 
       <!-- Pagination Controls -->
       <% if (totalPages !== 1) { %>
@@ -98,6 +93,11 @@
       </div>
       <% } %>
 
+      <% } else { %>
+        <div class="no-products">
+          <p>Products not Found.</p>
+        </div>
+        <% } %>
     <script>
       function filterProducts(category) {
         const products = document.querySelectorAll(".product");
