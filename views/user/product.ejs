@@ -7,8 +7,133 @@
     <link rel="stylesheet" href="/styles/partials/admin-navbar.css">
     <link rel="stylesheet" href="/styles/partials/header.css">
     <link rel="stylesheet" href="/styles/partials/flash.css">
-    <link rel="stylesheet" href="/styles/user/product.css">
 </head>
+<style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "poppins";
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  margin-bottom: 100px;
+}
+
+.img img {
+  width: 85vw;
+  height: 26vh;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.info {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-transform: capitalize;
+  margin: 10px auto;
+}
+
+.info h1 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.info h2 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: gray;
+}
+
+.info p {
+  font-size: 1.3rem;
+}
+
+p.price {
+  color: goldenrod;
+  font-size: 1.4rem;
+}
+
+p.category {
+  color: cornflowerblue;
+}
+
+p.in-stock {
+  color: greenyellow;
+}
+
+p.out-of-stock {
+  color: red;
+}
+
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.quantity{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: antiquewhite;
+  border-radius: 5px;
+  width: 120px;
+}
+
+.qty input {
+  border: none;
+  outline: none;
+  text-align: center;
+  font-size: 1.3rem;
+  width: fit-content;
+  color: black;
+  background: antiquewhite;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  width: 50px;
+}
+
+.qty button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 2rem;
+  border-radius: 5px;
+  background: antiquewhite;
+  color: rgb(23, 23, 23);
+}
+
+button[type="submit"] {
+    background-color: #d4af37;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px;
+    color: #1c1c1c;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.4rem;
+    margin-top: 25px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+</style>
 <body>
     <%- include('../partials/header.ejs')  %>
     <%- include('../partials/navbar.ejs')  %>

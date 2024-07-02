@@ -11,8 +11,130 @@
     <link rel="stylesheet" href="/styles/partials/flash.css" />
     <link rel="stylesheet" href="/styles/partials/header.css" />
     <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
-    <link rel="stylesheet" href="/styles/user/cart.css" />
   </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "poppins";
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 500;
+    }
+
+    .cart-items {
+      margin: 5px auto;
+      margin-bottom: 110px;
+      max-width: 96vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .acp,
+    .mix {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .acp h2,
+    .mix h2 {
+      font-weight: 500;
+      color: #d4af37;
+    }
+
+    table {
+      width: 100%;
+      border: 1px solid white;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid white;
+      text-align: center;
+      font-size: 17px;
+      padding: 5px 5px;
+    }
+
+    th {
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    form button {
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .delete i {
+      color: red;
+      font-size: 1.35rem;
+    }
+
+    .checkout {
+      padding: 5px 8px;
+      background: #d4af37;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      color: black;
+    }
+
+    .end {
+      text-align: center;
+    }
+
+    a.continue {
+      color: #d4af37;
+    }
+
+    a.continue:hover {
+      text-decoration: underline;
+    }
+
+    a.continue:active {
+      text-decoration: underline;
+    }
+
+    .empty {
+      text-align: center;
+      margin-top: 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .empty p {
+      color: gray;
+    }
+
+    #qty button {
+      border: none;
+      outline: none;
+      padding: 2px 3px;
+      font-size: 1.4rem;
+    }
+
+    #qty span {
+      margin: 0 3px;
+    }
+  </style>
   <body>
     <%- include('../partials/header.ejs') %> <%-
     include('../partials/navbar.ejs') %> <%- include('../partials/flash.ejs') %>

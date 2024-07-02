@@ -4,12 +4,182 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Page | Crown Sourcing</title>
-    <link rel="stylesheet" href="/styles/user/home.css" />
     <link rel="stylesheet" href="/styles/partials/header.css" />
     <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
     <link rel="stylesheet" href="/styles/partials/flash.css" />
     <!-- Add more stylesheets or meta tags as needed -->
   </head>
+  <style>
+    * {
+  font-family: "poppins";
+}
+
+h2 {
+  text-align: center;
+  font-weight: 500;
+}
+
+.filtering {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.sorting-options form select{
+  background: transparent;
+  color: white;
+  padding: 3px 5px;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.sorting-options form select option{
+  background: #1c1c1c;
+  font-size: 15px;
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-buttons button {
+  border: none;
+  outline: none;
+  font-size: 18px;
+  background: #3b3b3b;
+  padding: 3px 10px;
+  border-radius: 5px;
+}
+
+.products {
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 10px 0 0 0;
+}
+
+.product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.image img {
+  border-radius: 15px;
+  width: 88vw;
+  height: 26vh;
+  object-fit: cover;
+}
+
+.info {
+  width: 100%;
+  padding: 0 20px 0 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: capitalize;
+  text-align: center;
+  gap: 10px;
+}
+
+.info h3 {
+  font-weight: 400;
+  width: 60%;
+}
+
+.no-products p {
+  margin-top: 100px;
+  text-align: center;
+  font-size: 19px;
+  color: gray;
+}
+
+.search-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-box input {
+  width: 80%;
+  padding: 3px 10px;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1.2rem;
+  background: transparent;
+  border: 1px solid gray;
+  color: white;
+}
+
+.search-box button {
+  border: none;
+  outline: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pagination a {
+  text-decoration: none;
+  color: #fff;
+  margin: 0 5px;
+  padding: 12px 20px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+.pagination a:hover {
+  background-color: #f0f0f0;
+}
+.pagination a.active {
+  background-color: #d4af37;
+  color: #000;
+  pointer-events: none;
+}
+.pagination a.disabled {
+  color: #ccc;
+  pointer-events: none;
+}
+.pagination a.arrow {
+  padding: 8px 10px;
+}
+
+.container {
+  max-width: 96vw;
+  margin: 10px auto; 
+  margin-bottom: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+  </style>
   <body>
     <%- include('../partials/header') %>
     <%- include('../partials/navbar') %>

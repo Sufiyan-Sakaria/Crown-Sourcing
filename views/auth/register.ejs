@@ -8,8 +8,150 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
     />
-    <link rel="stylesheet" href="/styles/auth/register.css" />
   </head>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Alegreya Sans SC", sans-serif;
+    }
+
+    body {
+      background-color: #121212;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .register-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+    }
+
+    .register-box {
+      background-color: #1c1c1c;
+      padding: 30px 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      width: 92vw;
+      color: #d4af37;
+    }
+
+    .logo img {
+      width: 120px;
+      height: 170px;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 400;
+      margin-top: 15px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-size: 22px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      margin: 20px auto 35px auto;
+    }
+
+    input {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid #d4af37;
+      padding: 10px;
+      margin-bottom: 10px;
+      color: #fff;
+      font-size: 20px;
+      font-family: "poppins";
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: #d4af37;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      color: #1c1c1c;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 30px;
+    }
+
+    button:hover {
+      background-color: #b8952e;
+    }
+
+    a {
+      display: block;
+      margin-top: 10px;
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 25px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .password-input {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #d4af37;
+    }
+
+    .password-input input {
+      border: none;
+      padding: 2px 10px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 2.5vw;
+      bottom: 1vh;
+      cursor: pointer;
+      font-size: 30px;
+    }
+
+    .Role {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 15px;
+      font-size: 28px;
+    }
+
+    .Role select {
+      font-size: 21px;
+      padding: 5px 10px;
+      background: transparent;
+      color: white;
+      border-radius: 5px;
+    }
+
+    .Role select option {
+      background: #1c1c1c;
+      font-size: 20px;
+    }
+  </style>
   <body>
     <div class="register-container">
       <div class="register-box">
