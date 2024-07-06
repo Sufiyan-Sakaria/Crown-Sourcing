@@ -1,335 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= user.username %> Cart</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
-    />
-    <!-- Additional CSS links for styling -->
-    <link rel="stylesheet" href="/styles/partials/header.css" />
-    <link rel="stylesheet" href="/styles/partials/flash.css" />
-    <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Poppins", sans-serif;
-      }
 
-      h1 {
-        text-align: center;
-        font-size: 1.8rem;
-        font-weight: 500;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= user.username %> Cart
+  </title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" />
+  <!-- Additional CSS links for styling -->
+  <link rel="stylesheet" href="/styles/partials/header.css" />
+  <link rel="stylesheet" href="/styles/partials/flash.css" />
+  <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
 
-      .cart-items {
-        margin: 5px auto;
-        margin-bottom: 110px;
-        max-width: 96vw;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        gap: 10px;
-      }
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 500;
+    }
 
-      .product-section {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        gap: 12px;
-        width: 100%;
-      }
+    .cart-items {
+      margin: 5px auto;
+      margin-bottom: 110px;
+      max-width: 96vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-      .product-section h2 {
-        font-weight: 500;
-        color: #d4af37;
-      }
+    .product-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
 
-      table {
-        width: 100%;
-        border: 1px solid white;
-        border-collapse: collapse;
-      }
+    .product-section h2 {
+      font-weight: 500;
+      color: #d4af37;
+    }
 
-      th,
-      td {
-        border: 1px solid white;
-        text-align: center;
-        font-size: 17px;
-        padding: 5px 5px;
-      }
+    table {
+      width: 100%;
+      border: 1px solid white;
+      border-collapse: collapse;
+    }
 
-      th {
-        font-size: 20px;
-        font-weight: 500;
-      }
+    th,
+    td {
+      border: 1px solid white;
+      text-align: center;
+      font-size: 17px;
+      padding: 5px 5px;
+    }
 
-      form {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+    th {
+      font-size: 20px;
+      font-weight: 500;
+    }
 
-      form button {
-        border: none;
-        outline: none;
-        cursor: pointer;
-      }
+    form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-      .delete i {
-        color: red;
-        font-size: 1.35rem;
-      }
+    form button {
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
 
-      .checkout {
-        padding: 5px 8px;
-        background: #d4af37;
-        border-radius: 5px;
-        font-size: 1.2rem;
-        color: black;
-      }
+    .delete i {
+      color: red;
+      font-size: 1.35rem;
+    }
 
-      .end {
-        text-align: center;
-      }
+    .checkout {
+      padding: 5px 8px;
+      background: #d4af37;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      color: black;
+    }
 
-      a.continue {
-        color: #d4af37;
-      }
+    .end {
+      text-align: center;
+    }
 
-      a.continue:hover {
-        text-decoration: underline;
-      }
+    a.continue {
+      color: #d4af37;
+    }
 
-      a.continue:active {
-        text-decoration: underline;
-      }
+    a.continue:hover {
+      text-decoration: underline;
+    }
 
-      .empty {
-        text-align: center;
-        margin-top: 120px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
+    a.continue:active {
+      text-decoration: underline;
+    }
 
-      .empty p {
-        color: gray;
-      }
+    .empty {
+      text-align: center;
+      margin-top: 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-      .qty {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        gap: 10px;
-      }
+    .empty p {
+      color: gray;
+    }
 
-      .qty button {
-        border: none;
-        outline: none;
-        font-size: 2rem;
-      }
-    </style>
-  </head>
-  <body>
-    <%- include('../partials/flash.ejs') %> <%-
-    include('../partials/header.ejs') %> <%- include('../partials/navbar.ejs')
-    %> <% if (cartItem.length > 0) { %>
-    <h1><%= user.username %> Cart</h1>
+    .qty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      gap: 10px;
+    }
 
-    <div class="cart-items">
-      <% if (acpProducts.length > 0) { %>
-      <div class="product-section">
-        <h2>Acp Products</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Quantity</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% let totalQtyAcp = 0; %> <% acpProducts.forEach(item => { %>
-            <tr>
-              <td><%= item.productId.name %></td>
-              <td id="qty-<%= item.productId._id %>" class="qty">
-                <button
-                  onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', -1, '<%= item.brand %>')"
-                >
-                  -
-                </button>
-                <span class="quantity"><%= item.quantity %></span>
-                <button
-                  onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', 1, '<%= item.brand %>')"
-                >
-                  +
-                </button>
-              </td>
-              <td>
-                <form
-                  action="/user/cart/delete/<%= item.productId._id %>/<%= user._id %>"
-                  method="post"
-                >
-                  <button type="submit" class="delete">
-                    <i class="ri-delete-bin-2-line"></i>
-                  </button>
+    .qty button {
+      border: none;
+      outline: none;
+      font-size: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <%- include('../partials/flash.ejs') %> <%- include('../partials/header.ejs') %> <%- include('../partials/navbar.ejs')
+        %>
+        <% if (cartItem.length> 0) { %>
+          <h1>
+            <%= user.username %> Cart
+          </h1>
+
+          <div class="cart-items">
+            <% if (acpProducts.length> 0) { %>
+              <div class="product-section acp-section">
+                <h2>Acp Products</h2>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Quantity</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% let totalQtyAcp=0; %>
+                      <% acpProducts.forEach(item=> { %>
+                        <tr>
+                          <td>
+                            <%= item.productId.name %>
+                          </td>
+                          <td id="qty-<%= item.productId._id %>" class="qty">
+                            <button
+                              onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', -1, '<%= item.brand %>')">
+                              -
+                            </button>
+                            <span class="quantity">
+                              <%= item.quantity %>
+                            </span>
+                            <button
+                              onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', 1, '<%= item.brand %>')">
+                              +
+                            </button>
+                          </td>
+                          <td>
+                            <form action="/user/cart/delete/<%= item.productId._id %>/<%= user._id %>" method="post">
+                              <button type="submit" class="delete">
+                                <i class="ri-delete-bin-2-line"></i>
+                              </button>
+                            </form>
+                          </td>
+                        </tr>
+                        <% totalQtyAcp +=item.quantity; %>
+                          <% }); %>
+                            <tr class="total">
+                              <td>Grand Total</td>
+                              <td colspan="2">
+                                <span id="totalQtyAcp">
+                                  <%= totalQtyAcp %>
+                                </span>
+                              </td>
+                            </tr>
+                  </tbody>
+                </table>
+                <form action="/user/checkout/<%= user._id %>/?brand=Acp" method="post">
+                  <button type="submit" class="checkout">Proceed To Checkout</button>
                 </form>
-              </td>
-            </tr>
-            <% totalQtyAcp += item.quantity; %> <% }); %>
-            <tr class="total">
-              <td>Grand Total</td>
-              <td colspan="2">
-                <span id="totalQtyAcp"><%= totalQtyAcp %></span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <form
-          action="/user/checkout/<%= user._id %>/?brand=Acp"
-          method="post"
-        >
-          <button type="submit" class="checkout">Proceed To Checkout</button>
-        </form>
-      </div>
-      <% } %> <% if (mixProducts.length > 0) { %>
-      <div class="product-section">
-        <h2>Mix Products</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Quantity</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% let totalQtyMix = 0; %> <% mixProducts.forEach(item => { %>
-            <tr>
-              <td><%= item.productId.name %></td>
-              <td id="qty-<%= item.productId._id %>" class="qty">
-                <button
-                  onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', -1, '<%= item.brand %>')"
-                >
-                  -
-                </button>
-                <span class="quantity"><%= item.quantity %></span>
-                <button
-                  onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', 1, '<%= item.brand %>')"
-                >
-                  +
-                </button>
-              </td>
-              <td>
-                <form
-                  action="/user/cart/delete/<%= item.productId._id %>/<%= user._id %>"
-                  method="post"
-                >
-                  <button type="submit" class="delete">
-                    <i class="ri-delete-bin-2-line"></i>
-                  </button>
-                </form>
-              </td>
-            </tr>
-            <% totalQtyMix += item.quantity; %> <% }); %>
-            <tr class="total">
-              <td>Grand Total</td>
-              <td colspan="2">
-                <span id="totalQtyMix"><%= totalQtyMix %></span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <form
-          action="/user/checkout/<%= user._id %>/?brand=Mix"
-          method="post"
-        >
-          <button type="submit" class="checkout">Proceed To Checkout</button>
-        </form>
-      </div>
-      <% } %>
-      <div class="end">
-        <a href="/user" class="continue">Continue Shopping</a>
-      </div>
-    </div>
-    <% } else { %>
-    <div class="empty">
-      <p>Your cart is empty.</p>
-      <a href="/user" class="continue">Continue Shopping</a>
-    </div>
-    <% } %>
+              </div>
+              <% } %>
+                <% if (mixProducts.length> 0) { %>
+                  <div class="product-section mix-section">
+                    <h2>Mix Products</h2>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Quantity</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% let totalQtyMix=0; %>
+                          <% mixProducts.forEach(item=> { %>
+                            <tr>
+                              <td>
+                                <%= item.productId.name %>
+                              </td>
+                              <td id="qty-<%= item.productId._id %>" class="qty">
+                                <button
+                                  onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', -1, '<%= item.brand %>')">
+                                  -
+                                </button>
+                                <span class="quantity">
+                                  <%= item.quantity %>
+                                </span>
+                                <button
+                                  onclick="updateQuantity('<%= item.productId._id %>', '<%= user._id %>', 1, '<%= item.brand %>')">
+                                  +
+                                </button>
+                              </td>
+                              <td>
+                                <form action="/user/cart/delete/<%= item.productId._id %>/<%= user._id %>"
+                                  method="post">
+                                  <button type="submit" class="delete">
+                                    <i class="ri-delete-bin-2-line"></i>
+                                  </button>
+                                </form>
+                              </td>
+                            </tr>
+                            <% totalQtyMix +=item.quantity; %>
+                              <% }); %>
+                                <tr class="total">
+                                  <td>Grand Total</td>
+                                  <td colspan="2">
+                                    <span id="totalQtyMix">
+                                      <%= totalQtyMix %>
+                                    </span>
+                                  </td>
+                                </tr>
+                      </tbody>
+                    </table>
+                    <form action="/user/checkout/<%= user._id %>/?brand=Mix" method="post">
+                      <button type="submit" class="checkout">Proceed To Checkout</button>
+                    </form>
+                  </div>
+                  <% } %>
+                    <div class="end">
+                      <a href="/user" class="continue">Continue Shopping</a>
+                    </div>
+          </div>
+          <% } else { %>
+            <div class="empty">
+              <p>Your cart is empty.</p>
+              <a href="/user" class="continue">Continue Shopping</a>
+            </div>
+            <% } %>
 
-    <script>
-      function updateQuantity(productId, userId, change, brand) {
-        const quantityElement = document.querySelector(
-          `#qty-${productId} .quantity`
-        );
-        const currentQuantity = parseInt(quantityElement.innerText);
-        const newQuantity = currentQuantity + change;
+              <script>
+                function updateQuantity(productId, userId, change, brand) {
+                  const quantityElement = document.querySelector(
+                    `#qty-${productId} .quantity`
+                  );
+                  const currentQuantity = parseInt(quantityElement.innerText);
+                  const newQuantity = currentQuantity + change;
 
-        if (newQuantity < 1) {
-          alert("Quantity cannot be less than 1.");
-          return;
-        }
-        if (newQuantity > 1000) {
-          alert(`Quantity cannot be greater than stock (1000).`);
-          return;
-        }
+                  if (newQuantity < 1) {
+                    alert("Quantity cannot be less than 1.");
+                    return;
+                  }
+                  if (newQuantity > 1000) {
+                    alert(`Quantity cannot be greater than stock (1000).`);
+                    return;
+                  }
 
-        fetch(`/user/cart/update`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            productId,
-            userId,
-            quantity: newQuantity,
-            brand,
-          }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.success) {
-              quantityElement.innerText = newQuantity;
-              updateTotalQuantity(); // Update total quantity after successful update
-            } else {
-              console.error("Failed to update quantity:", data.error);
-              alert("Failed to update quantity: " + data.error);
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            alert("Failed to update quantity: " + error.message);
-          });
-      }
+                  fetch(`/user/cart/update`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      productId,
+                      userId,
+                      quantity: newQuantity,
+                      brand,
+                    }),
+                  })
 
-      function updateTotalQuantity() {
-        // Calculate total quantity dynamically from displayed quantities
-        let totalQtyAcp = 0;
-        document
-          .querySelectorAll(".product-section:nth-child(1) .quantity")
-          .forEach((element) => {
-            totalQtyAcp += parseInt(element.innerText);
-          });
-        document.getElementById("totalQtyAcp").innerText = totalQtyAcp;
-
-        let totalQtyMix = 0;
-        document
-          .querySelectorAll(".product-section:nth-child(2) .quantity")
-          .forEach((element) => {
-            totalQtyMix += parseInt(element.innerText);
-          });
-        document.getElementById("totalQtyMix").innerText = totalQtyMix;
-      }
-    </script>
-  </body>
-</html>
+                    .then((response) => response.json())
+                    .then((data) => {
+                      if (data.success) {
+                        quantityElement.innerText = newQuantity;
+                        updateTotalQuantity(brand); // Update total quantity after successful update
+                      } else {
+                        console.error("Failed to update quantity:", data.error);
+                        alert("Failed to update quantity: " + data.error);
+                      }
+                    })
+                    .catch((error) => {
+                      console.error("Error:", error);
+                      alert("Failed to update quantity: " + error.message);
+                    });
+                } function updateTotalQuantity(brand) {
+                  // Calculate total quantity dynamically from displayed quantities
+                  let totalQty = 0;
+                  document
+                    .querySelectorAll(`.product-section.${brand.toLowerCase()}-section .quantity`)
+                    .forEach((element) => {
+                      totalQty += parseInt(element.innerText);
+                    });
+                  document.getElementById(`totalQty${brand}`).innerText = totalQty;
+                }
+              </script>
