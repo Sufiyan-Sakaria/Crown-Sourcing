@@ -27,9 +27,9 @@ const paymentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  category: {
+  brand: {
     type: String,
-    enum: ["ACP", "Mix"],
+    enum: ["Acp", "Mix"],
     required: true,
   },
 });

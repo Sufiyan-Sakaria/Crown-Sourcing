@@ -22,16 +22,26 @@ const orderSchema = new mongoose.Schema({
         required: true,
       },
       quantity: { type: Number, required: true },
+      price: { type: Number, default: 0 },
     },
   ],
-  total: { type: Number, required: true },
+  total: { type: Number, default: 0 },
   status: {
     type: String,
     enum: ["Pending", "Approved", "Rejected"],
     default: "Pending",
   },
   orderDate: { type: Date, default: Date.now },
-  category: { type: String, required: true }, // Add category field
+  brand: { type: String, required: true },
+});
+
+orderSchema.pre("save", function (next) {
+  let total = 0;
+  this.items.forEach((item) => {
+    total += item.quantity * item.price;
+  });
+  this.total = total;
+  next();
 });
 
 const Order = mongoose.model("Order", orderSchema);

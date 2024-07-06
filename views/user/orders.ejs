@@ -7,195 +7,196 @@
     <link rel="stylesheet" href="/styles/partials/flash.css" />
     <link rel="stylesheet" href="/styles/partials/header.css" />
     <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
+    <style>
+      * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "poppins";
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+  
+  .container {
+    max-width: 92vw;
+    margin: 10px auto;
+    margin-bottom: 110px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .orders {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .order {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    background: #313131;
+    border-radius: 10px;
+    padding: 15px 10px;
+  }
+  
+  .top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+  }
+  
+  .top h2 {
+    background: #313131;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #fff;
+  }
+  
+  .top p {
+    background: #313131;
+    font-size: 1.1rem;
+  }
+  
+  strong {
+    font-weight: 600;
+    background: #313131;
+  }
+  
+  .pending {
+    color: yellow;
+  }
+  
+  .rejected {
+    color: red;
+  }
+  
+  .approved {
+    color: lightgreen;
+  }
+  
+  .date {
+    width: 100%;
+  }
+  
+  .order h3 {
+    font-weight: 600;
+    font-size: 1.2rem;
+    background: #313131;
+  }
+  
+  .order table {
+    width: 100%;
+    border: 1px solid white;
+    border-collapse: collapse;
+    background: #313131;
+  }
+  
+  th,
+  td {
+    border: 1px solid white;
+    text-align: center;
+    font-size: 16px;
+    padding: 3px;
+  }
+  
+  th {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  
+  form#limitForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  form#limitForm select {
+    background: transparent;
+    padding: 2px 3px;
+    border-radius: 5px;
+    color: white;
+  }
+  
+  form#limitForm select option {
+    background: #1c1c1c;
+    font-size: 1rem;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .pagination a {
+    text-decoration: none;
+    color: #fff;
+    margin: 0 5px;
+    padding: 11px 15px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+  }
+  .pagination a:hover {
+    background-color: #f0f0f0;
+  }
+  .pagination a.active {
+    background-color: #d4af37;
+    color: #000;
+    pointer-events: none;
+  }
+  .pagination a.disabled {
+    color: #ccc;
+    pointer-events: none;
+  }
+  .pagination a.arrow {
+    padding: 8px 10px;
+  }
+  
+  .end-of-list {
+    text-align: center;
+  }
+  
+  .end {
+    text-align: center;
+    color: gray;
+    margin-top: 50px;
+  }
+  
+  #brandFilterForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;  
+  }
+  
+  #brandFilterForm select {
+    background: transparent;
+    padding: 2px 3px;
+    border-radius: 5px;
+    color: white;
+  }
+  
+  #brandFilterForm select option {
+    background: #1c1c1c;
+    font-size: 1rem;
+  }
+  </style>
 </head>
-<style>
-    * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "poppins";
-}
-
-h1 {
-  text-align: center;
-  font-size: 1.6rem;
-  font-weight: 500;
-}
-
-.container {
-  max-width: 92vw;
-  margin: 10px auto;
-  margin-bottom: 110px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.orders {
-  max-width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.order {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 5px;
-  background: #313131;
-  border-radius: 10px;
-  padding: 15px 10px;
-}
-
-.top {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: transparent;
-}
-
-.top h2 {
-  background: #313131;
-  font-size: 1.4rem;
-  font-weight: 500;
-  color: #fff;
-}
-
-.top p {
-  background: #313131;
-  font-size: 1.1rem;
-}
-
-strong {
-  font-weight: 600;
-  background: #313131;
-}
-
-.pending {
-  color: yellow;
-}
-
-.rejected {
-  color: red;
-}
-
-.approved {
-  color: lightgreen;
-}
-
-.date {
-  width: 100%;
-}
-
-.order h3 {
-  font-weight: 600;
-  font-size: 1.2rem;
-  background: #313131;
-}
-
-.order table {
-  width: 100%;
-  border: 1px solid white;
-  border-collapse: collapse;
-  background: #313131;
-}
-
-th,
-td {
-  border: 1px solid white;
-  text-align: center;
-  font-size: 16px;
-  padding: 3px;
-}
-
-th {
-  font-size: 20px;
-  font-weight: 500;
-}
-
-form#limitForm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-form#limitForm select {
-  background: transparent;
-  padding: 2px 3px;
-  border-radius: 5px;
-  color: white;
-}
-
-form#limitForm select option {
-  background: #1c1c1c;
-  font-size: 1rem;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.pagination a {
-  text-decoration: none;
-  color: #fff;
-  margin: 0 5px;
-  padding: 12px 20px;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
-.pagination a:hover {
-  background-color: #f0f0f0;
-}
-.pagination a.active {
-  background-color: #d4af37;
-  color: #000;
-  pointer-events: none;
-}
-.pagination a.disabled {
-  color: #ccc;
-  pointer-events: none;
-}
-.pagination a.arrow {
-  padding: 8px 10px;
-}
-
-.end-of-list {
-  text-align: center;
-}
-
-.end {
-  text-align: center;
-  color: gray;
-  margin-top: 50px;
-}
-
-#categoryFilterForm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;  
-}
-
-#categoryFilterForm select {
-  background: transparent;
-  padding: 2px 3px;
-  border-radius: 5px;
-  color: white;
-}
-
-#categoryFilterForm select option {
-  background: #1c1c1c;
-  font-size: 1rem;
-}
-</style>
 <body>
     <%- include('../partials/header.ejs') %>
     <%- include('../partials/navbar.ejs') %>
@@ -203,29 +204,41 @@ form#limitForm select option {
 
     <h1><%= user?.username || 'User' %> Orders</h1>
 
-    <!-- Category Filter Form -->
-    <form method="GET" action="/user/orders/<%= user?._id %>" id="categoryFilterForm">
-        <label for="category">Filter by Category :</label>
-        <select name="category" id="category" onchange="document.getElementById('categoryFilterForm').submit()">
+    <!-- Brand Filter Form -->
+    <form method="GET" action="/user/orders/<%= user?._id %>" id="brandFilterForm">
+        <label for="brand">Filter by Brand:</label>
+        <select name="brand" id="brand" onchange="document.getElementById('brandFilterForm').submit()">
             <option value="">All</option>
-            <option value="acp" <%= category === 'acp' ? 'selected' : '' %>>ACP</option>
-            <option value="mix" <%= category === 'mix' ? 'selected' : '' %>>Mix</option>
+            <option value="Acp" <%= brand === 'Acp' ? 'selected' : '' %>>ACP</option>
+            <option value="Mix" <%= brand === 'Mix' ? 'selected' : '' %>>Mix</option>
             <!-- Add more options as needed -->
         </select>
+    </form>
+
+    <!-- Limit Form for items per page -->
+    <form method="GET" action="/user/orders/<%= user?._id %>" id="limitForm">
+        <label for="limit">Order per page :</label>
+        <select name="limit" id="limit" onchange="document.getElementById('limitForm').submit()">
+            <option value="5" <%= limit === 5 ? 'selected' : '' %>>5</option>
+            <option value="10" <%= limit === 10 ? 'selected' : '' %>>10</option>
+            <option value="20" <%= limit === 20 ? 'selected' : '' %>>20</option>
+            <option value="30" <%= limit === 30 ? 'selected' : '' %>>30</option>
+            <option value="50" <%= limit === 50 ? 'selected' : '' %>>50</option>
+        </select>
         <input type="hidden" name="page" value="<%= currentPage || 1 %>" id="page">
-        <input type="hidden" name="limit" value="<%= limit || 10 %>" id="limit">
+        <input type="hidden" name="brand" value="<%= brand || '' %>" id="brand">
     </form>
 
     <% if (orders && orders.length > 0) { %>
         <!-- Orders List -->
         <div class="container">
             <div class="orders">
-                <% orders.reverse().forEach((order, index) => { %>
+                <% orders.forEach((order, index) => { %>
                     <div class="order">
                         <div class="top">
                             <h2>Order No <%= order.userOrderId %></h2> <!-- Display userOrderId instead of calculated index -->
                             <p>
-                                <strong>Status : </strong>
+                                <strong>Status:</strong>
                                 <span class="<%= order.status.toLowerCase() %>"><%= order.status %></span>
                             </p>
                         </div>
@@ -233,9 +246,9 @@ form#limitForm select option {
                             <strong>Date:</strong> <%= order.orderDate ? order.orderDate.toDateString() : 'N/A' %>
                         </p>
                         <p>
-                            <strong>Category : </strong>
-                            <%= order.category === 'acp' ? 'ACP' : (order.category === 'mix' ? 'Mix' : 'Unknown') %>
-                            <!-- Adjust as per your category names -->
+                            <strong>Brand:</strong>
+                            <%= order.brand === 'Acp' ? 'ACP' : (order.brand === 'Mix' ? 'Mix' : 'Unknown') %>
+                            <!-- Adjust as per your brand names -->
                         </p>
                         <h3>Products List</h3>
                         <table>
@@ -245,6 +258,7 @@ form#limitForm select option {
                                     <th>Name</th>
                                     <th>Qty</th>
                                     <th>Price</th>
+                                    <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -255,13 +269,14 @@ form#limitForm select option {
                                         <td><%= itemIndex + 1 %>.</td>
                                         <td><%= item.productId?.name || 'Unknown' %></td>
                                         <td><%= item.quantity %></td>
-                                        <td><%= (item.productId?.price * item.quantity) %></td>
+                                        <td><%= item?.price %></td>
+                                        <td><%= (item?.price * item.quantity) %></td>
                                     </tr>
                                 <% }); %>
                                 <tr>
                                     <td colspan="2"><strong>Grand Total</strong></td>
                                     <td><strong><%= totalQty %></strong></td>
-                                    <td><strong><%= order.total %></strong></td>
+                                    <td colspan="2"><strong><%= order.total %></strong></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -270,26 +285,26 @@ form#limitForm select option {
             </div>
 
             <!-- Pagination Controls -->
-            <% if (totalPages && totalPages !== 1) { %>
+            <% if (totalPages && totalPages > 1) { %>
                 <div class="pagination">
                     <% if (currentPage > 1) { %>
-                        <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>&category=<%= category %>" class="arrow">« </a>
+                        <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>&brand=<%= brand %>" class="arrow">«</a>
                     <% } else { %>
-                        <a class="arrow disabled">« </a>
+                        <a class="arrow disabled">«</a>
                     <% } %>
 
                     <% for (let i = 1; i <= totalPages; i++) { %>
-                        <a href="?page=<%= i %>&limit=<%= limit %>&category=<%= category %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
+                        <a href="?page=<%= i %>&limit=<%= limit %>&brand=<%= brand %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
                     <% } %>
 
                     <% if (currentPage < totalPages) { %>
-                        <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>&category=<%= category %>" class="arrow"> »</a>
+                        <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>&brand=<%= brand %>" class="arrow">»</a>
                     <% } else { %>
-                        <a class="arrow disabled"> »</a>
+                        <a class="arrow disabled">»</a>
                     <% } %>
                 </div>
             <% } %>
-            
+
             <p class="end-of-list">End of List</p>
         </div>
     <% } else { %>

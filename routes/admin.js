@@ -115,17 +115,22 @@ router.post("/user/delete/:id", async (req, res) => {
 });
 
 // Route to render the products page
-router.get("/products", isLoggedIn, isAdmin, (req, res) => {
-  let path = req.originalUrl;
-  productModel
-    .find()
-    .then((products) => {
-      res.render("admin/products", { products, path });
-    })
-    .catch((err) => {
-      console.error("Error fetching products:", err);
-      res.status(500).send("Error fetching products");
-    });
+router.get("/products", isLoggedIn, isAdmin, async (req, res) => {
+  try {
+    let path = req.originalUrl;
+
+    // Fetch distinct brands and categories
+    const brands = await productModel.distinct("brand");
+    const categories = await productModel.distinct("category");
+
+    // Fetch all products
+    const products = await productModel.find();
+
+    res.render("admin/products", { products, brands, categories, path });
+  } catch (err) {
+    console.error("Error fetching products:", err);
+    res.status(500).send("Error fetching products");
+  }
 });
 
 router.get("/product/add", isLoggedIn, isAdmin, (req, res) => {
@@ -133,7 +138,7 @@ router.get("/product/add", isLoggedIn, isAdmin, (req, res) => {
 });
 
 router.post("/product/add", upload.single("image"), (req, res) => {
-  const { name, description, price, category, stock } = req.body;
+  const { name, description, category, brand, inStock } = req.body;
 
   let finalImg;
 
@@ -157,10 +162,10 @@ router.post("/product/add", upload.single("image"), (req, res) => {
   const newProduct = new productModel({
     name,
     description,
-    price,
     image: finalImg,
     category,
-    stock,
+    brand,
+    inStock: inStock ? true : false,
   });
 
   newProduct
@@ -193,7 +198,7 @@ router.get("/product/edit/:id", (req, res) => {
 
 // Route to handle product update
 router.post("/product/edit/:id", upload.single("image"), (req, res) => {
-  const { name, description, price, category, stock } = req.body;
+  const { name, description, brand, category, inStock } = req.body;
 
   productModel
     .findById(req.params.id)
@@ -204,9 +209,9 @@ router.post("/product/edit/:id", upload.single("image"), (req, res) => {
 
       product.name = name;
       product.description = description;
-      product.price = price;
+      product.brand = brand;
       product.category = category;
-      product.stock = stock;
+      product.inStock = inStock ? true : false;
 
       if (req.file) {
         product.image = {
@@ -222,8 +227,8 @@ router.post("/product/edit/:id", upload.single("image"), (req, res) => {
       res.redirect("/admin/products"); // Redirect to the products list
     })
     .catch((err) => {
-      console.error("Error updating product:", err);
-      res.status(500).send("Error updating product");
+      req.flash("error_msg", "Error Updating Product" + err.message);
+      res.redirect("/admin/products");
     });
 });
 
@@ -241,41 +246,79 @@ router.post("/product/delete/:id", (req, res) => {
     });
 });
 
-router.get("/orders", isLoggedIn, isAdmin, async (req, res) => {
+// Route to view admin's orders with pagination, filtering, and sorting
+router.get("/orders", async (req, res) => {
   try {
     let path = req.originalUrl;
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10; // Default limit of items per page
-    const category = req.query.category || ""; // Get category filter
+    let limit = parseInt(req.query.limit) || 10;
+    const brand = req.query.brand;
 
-    let filter = {};
-    if (category) {
-      filter.category = category;
+    // Validate limit to prevent unreasonable values
+    if (limit < 1 || limit > 50) {
+      limit = 10; // Set default if limit is out of reasonable range
     }
 
-    const count = await orderModel.countDocuments(filter);
-    const orders = await orderModel
-      .find(filter)
-      .populate("user")
-      .populate("items.productId")
-      .sort({ createdAt: -1 }) // Optional: sort by creation date or any other field
-      .skip((page - 1) * limit)
-      .limit(limit);
+    // Fetch all orders with populated products and user data
+    const allOrders = await userModel.find({}).populate({
+      path: "orders",
+      populate: [
+        {
+          path: "items.productId",
+          model: "Product",
+        },
+        {
+          path: "user",
+          model: "User",
+        },
+      ],
+    });
+
+    // Flatten orders array
+    const orders = allOrders.flatMap((user) => user.orders);
+
+    // Filter orders by brand if brand query parameter is provided
+    let filteredOrders = orders;
+    if (brand) {
+      filteredOrders = filteredOrders.filter(
+        (order) => order.brand.toLowerCase() === brand.toLowerCase()
+      );
+    }
+
+    // Sort filtered orders by status and then by date (recent first)
+    filteredOrders.sort((a, b) => {
+      const statusOrder = { Pending: 3, Approved: 2, Rejected: 1 };
+      if (statusOrder[a.status] !== statusOrder[b.status]) {
+        return statusOrder[b.status] - statusOrder[a.status];
+      }
+      return new Date(b.date) - new Date(a.date); // Sort by date descending for same status
+    });
+
+    // Pagination logic for admin's orders
+    const totalOrders = filteredOrders.length;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const ordersOnPage = filteredOrders.slice(startIndex, endIndex);
 
     res.render("admin/orders", {
-      orders,
-      path,
+      orders: ordersOnPage.map((order) => ({
+        ...order.toObject(),
+        brand: order.brand, // Add brand to order object
+      })),
       currentPage: page,
-      totalPages: Math.ceil(count / limit),
+      totalPages: Math.ceil(totalOrders / limit),
       limit,
-      totalOrders: count,
-      selectedCategory: category, // Pass selected category to template
+      brand, // Pass brand to template for filtering UI
+      path,
     });
-  } catch (error) {
-    req.flash("error_msg", "Failed to load orders: " + error.message);
-    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    req.flash("error_msg", "Failed to fetch admin orders: " + err.message);
+    res.redirect("/admin"); // Handle error and redirect appropriately
   }
 });
+
 
 // Route to update order status
 router.post(
@@ -289,33 +332,45 @@ router.post(
 
       const order = await orderModel
         .findById(orderId)
-        .populate("items.productId"); // Assuming 'items.productId' is a reference to the product
+        .populate("items.productId")
+        .populate("user");
 
       if (!order) {
         req.flash("error_msg", "Order not found");
         return res.redirect("/admin/orders");
       }
 
-      // Update stock based on the new status
-      if (status === "Rejected" && order.status !== "Rejected") {
-        // Add items back to stock
-        for (const item of order.items) {
-          item.productId.stock += item.quantity; // Adjust this according to your product model's stock field
-          await item.productId.save();
+      const user = order.user;
+      if (!user) {
+        req.flash("error_msg", "User not found");
+        return res.redirect("/admin/orders");
+      }
+
+      // Calculate the total price of the order
+      let orderTotal = 0;
+      for (const item of order.items) {
+        orderTotal += item.quantity * item.price;
+      }
+
+      if (status === "Approved" && order.status !== "Approved") {
+        // Add order amount to the user's balance based on the brand
+        if (order.brand === "Acp") {
+          user.balanceACP += orderTotal;
+        } else if (order.brand === "Mix") {
+          user.balanceMix += orderTotal;
         }
-      } else if (
-        (status === "Approved" || status === "Pending") &&
-        order.status === "Rejected"
-      ) {
-        // Remove items from stock
-        for (const item of order.items) {
-          item.productId.stock -= item.quantity; // Adjust this according to your product model's stock field
-          await item.productId.save();
+      } else if (status === "Rejected" && order.status === "Approved") {
+        // Subtract order amount from the user's balance based on the brand
+        if (order.brand === "Acp") {
+          user.balanceACP -= orderTotal;
+        } else if (order.brand === "Mix") {
+          user.balanceMix -= orderTotal;
         }
       }
 
       order.status = status;
       await order.save();
+      await user.save();
 
       req.flash("success_msg", "Order status updated successfully");
       res.redirect("/admin/orders");
@@ -326,16 +381,91 @@ router.post(
   }
 );
 
+// Route to update an order
+router.post("/orders/:orderId/edit", isLoggedIn, isAdmin, async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { items, brand } = req.body;
+
+    const order = await orderModel.findById(orderId);
+
+    if (!order) {
+      req.flash("error_msg", "Order not found");
+      return res.redirect("/admin/orders");
+    }
+
+    // Clear existing items and update with new items
+    order.items = [];
+    let total = 0;
+
+    for (let item of items) {
+      const product = await productModel.findById(item.productId);
+
+      if (!product) {
+        req.flash("error_msg", `Product not found for ID: ${item.productId}`);
+        return res.redirect(`/admin/orders/${orderId}/edit`);
+      }
+
+      const itemTotal = item.quantity * item.price;
+      total += itemTotal;
+
+      order.items.push({
+        productId: item.productId,
+        quantity: item.quantity,
+        price: item.price,
+      });
+    }
+
+    order.total = total;
+    order.brand = brand;
+
+    await order.save();
+
+    req.flash("success_msg", "Order updated successfully");
+    res.redirect("/admin/orders");
+  } catch (error) {
+    console.error(error);
+    req.flash("error_msg", "Failed to update order: " + error.message);
+    res.redirect("/admin/orders");
+  }
+});
+
+// Route to get edit form for an order
+router.get("/orders/:orderId/edit", isLoggedIn, isAdmin, async (req, res) => {
+  try {
+    const path = req.originalUrl;
+    const { orderId } = req.params;
+    const order = await orderModel
+      .findById(orderId)
+      .populate("items.productId")
+      .populate("user");
+
+    if (!order) {
+      req.flash("error_msg", "Order not found");
+      return res.redirect("/admin/orders");
+    }
+
+    // Filter products by the brand of the order
+    const products = await productModel.find({ brand: order.brand });
+
+    res.render("admin/editOrder", { order, products, path });
+  } catch (error) {
+    req.flash("error_msg", "Failed to load order: " + error.message);
+    res.redirect("/admin/orders");
+  }
+});
+
 // Route for admins to manage payments
 router.get("/payments", isLoggedIn, isAdmin, async (req, res) => {
-  const { category } = req.query;
-  const query = category ? { category } : {};
+  const { brand } = req.query;
+  const query = brand ? { brand } : {};
+  console.log(query);
   const path = req.originalUrl;
   try {
     const payments = await paymentModel.find(query).populate("user").exec();
     res.render("admin/payments", {
       payments,
-      selectedCategory: category,
+      selectedbrand: brand,
       path,
     });
   } catch (error) {
@@ -352,10 +482,10 @@ router.post("/payments/:id/approve", isLoggedIn, isAdmin, async (req, res) => {
       payment.status = "Approved";
       await payment.save();
 
-      // Update user balance based on payment category
-      if (payment.category === "ACP") {
+      // Update user balance based on payment brand
+      if (payment.brand === "Acp") {
         payment.user.balanceACP -= payment.amount;
-      } else if (payment.category === "Mix") {
+      } else if (payment.brand === "Mix") {
         payment.user.balanceMix -= payment.amount;
       }
       await payment.user.save();

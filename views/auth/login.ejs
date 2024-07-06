@@ -1,170 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Crown Source</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
-    />
-  </head>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Alegreya Sans SC", sans-serif;
-    }
 
-    body {
-      background-color: #121212;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Crown Source</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" />
+</head>
+<style>
+  /* Add your existing styles here */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Alegreya Sans SC", sans-serif;
+  }
 
-    .login-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      width: 100%;
-    }
+  body {
+    background-color: #121212;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 
-    .login-box {
-      background-color: #1c1c1c;
-      padding: 30px 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      text-align: center;
-      width: 92vw;
-      color: #d4af37;
-    }
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
 
-    .logo img {
-      width: 120px;
-      height: 170px;
-      object-fit: cover;
-    }
+  .login-box {
+    background-color: #1c1c1c;
+    padding: 30px 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 92vw;
+    color: #d4af37;
+  }
 
-    h1 {
-      font-size: 24px;
-      font-weight: 400;
-      margin-top: 15px;
-      line-height: 1;
-      text-transform: uppercase;
-    }
+  .logo img {
+    width: 120px;
+    height: 170px;
+    object-fit: cover;
+  }
 
-    p {
-      font-size: 22px;
-    }
+  h1 {
+    font-size: 24px;
+    font-weight: 400;
+    margin-top: 15px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      margin: 20px auto 35px auto;
-    }
+  p {
+    font-size: 22px;
+  }
 
-    input {
-      background-color: transparent;
-      border: none;
-      outline: none;
-      border-bottom: 1px solid #d4af37;
-      padding: 10px;
-      margin-bottom: 10px;
-      color: #fff;
-      font-size: 20px;
-      font-family: "poppins";
-    }
+  form {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto 35px auto;
+  }
 
-    button {
-      margin-top: 20px;
-      background-color: #d4af37;
-      border: none;
-      border-radius: 5px;
-      padding: 5px 10px;
-      color: #1c1c1c;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 30px;
-    }
+  input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #d4af37;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 20px;
+    font-family: "poppins";
+  }
 
-    button:hover {
-      background-color: #b8952e;
-    }
+  button {
+    margin-top: 20px;
+    background-color: #d4af37;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: #1c1c1c;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 30px;
+  }
 
-    a {
-      display: block;
-      margin-top: 10px;
-      color: #d4af37;
-      text-decoration: none;
-      font-size: 25px;
-    }
+  button:hover {
+    background-color: #b8952e;
+  }
 
-    a:hover {
-      text-decoration: underline;
-    }
+  a {
+    display: block;
+    margin-top: 10px;
+    color: #d4af37;
+    text-decoration: none;
+    font-size: 25px;
+  }
 
-    .password-input {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #d4af37;
-    }
+  a:hover {
+    text-decoration: underline;
+  }
 
-    .password-input input {
-      border: none;
-      padding: 2px 10px;
-    }
+  .password-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #d4af37;
+  }
 
-    .toggle-password {
-      position: absolute;
-      right: 2.5vw;
-      cursor: pointer;
-      font-size: 30px;
-    }
-  </style>
-  <body>
-    <div class="login-container">
-      <div class="login-box">
-        <div class="logo">
-          <img src="/images/logo.png" alt="Crown Source Logo" />
-        </div>
-        <h1>WELCOME TO <br />CROWN SOURCING <span>!!</span></h1>
-        <p>WE REQUESTED YOU TO PROVE YOUR IDENTITY FIRST</p>
-        <form action="/auth/login" method="post">
-          <input
-            type="text"
-            name="username"
-            placeholder="Enter Username"
-            maxlength="64"
-            minlength="4"
-            required
-          />
-          <div class="password-input">
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Enter Password"
-              required
-              maxlength="32"
-              minlength="8"
-            />
-            <i
-              id="password-icon"
-              class="ri-eye-line toggle-password"
-              onclick="togglePassword('password')"
-            ></i>
-          </div>
-          <button type="submit">Log In</button>
-        </form>
-        <a href="/request-account">Request Account ?</a>
+  .password-input input {
+    border: none;
+    padding: 2px 10px;
+  }
+
+  .toggle-password {
+    position: absolute;
+    right: 2.5vw;
+    cursor: pointer;
+    font-size: 30px;
+  }
+
+  p.white {
+    color: #fff;
+    font-size: 1rem;
+  }
+</style>
+
+<body>
+
+  <div class="login-container">
+    <div class="login-box">
+      <div class="flash">
+        <% if (success_msg) { %>
+          <p class="success">
+            <%= success_msg %>
+          </p>
+          <% } %>
+            <% if (error_msg) { %>
+              <p class="error">
+                <%= error_msg %>
+              </p>
+              <% } %>
       </div>
+      <div class="logo">
+        <img src="/images/logo.png" alt="Crown Source Logo" />
+      </div>
+      <h1>WELCOME TO <br />CROWN SOURCING <span>!!</span></h1>
+      <p>WE REQUESTED YOU TO PROVE YOUR IDENTITY FIRST</p>
+
+      <form action="/auth/login" method="post">
+        <input type="text" name="username" placeholder="Enter Username" maxlength="64" minlength="4" required />
+        <div class="password-input">
+          <input type="password" name="password" id="password" placeholder="Enter Password" required maxlength="32"
+            minlength="8" />
+          <i id="password-icon" class="ri-eye-line toggle-password" onclick="togglePassword('password')"></i>
+        </div>
+        <button type="submit">Log In</button>
+      </form>
+      <p class="white">Version -- 1.4 (Stable)</p>
+      <a href="/auth/request">Request Account ?</a>
     </div>
-    <script src="/javascript/password.js"></script>
-  </body>
+  </div>
+  <script src="/javascript/password.js"></script>
+</body>
+
 </html>

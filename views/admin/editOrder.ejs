@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Order | Crown Sourcing</title>
+  <link rel="stylesheet" href="/styles/partials/flash.css" />
+  <link rel="stylesheet" href="/styles/partials/header.css" />
+  <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
+  <style>
+    * {
+      font-family: 'poppins';
+      font-size: 1rem;
+    }
+
+    .edit-order {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 94vw;
+      flex-direction: column;
+      margin: 10px auto 110px auto;
+      gap: 10px;
+    }
+
+    .edit-order h1 {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #d4af37;
+    }
+
+    .edit-form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }    
+
+    .edit-form h3 {
+      font-size: 1.3rem;
+      font-weight: 500;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    select {
+      background: transparent;
+      color: white;
+      font-size: 1rem;
+      border-radius: 5px;
+    }
+
+    option {
+      background: #1e1e1e;
+    }
+
+    #items {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .item {
+      width: 90%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      margin: 0 auto;
+      background: #3e3e3e;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .item input {
+      background: transparent;
+      color: white;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid #d4af37;
+      text-align: center;
+      width: 15%;
+    }
+
+    .item div {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+    }
+
+    .edit-form button {
+      background: #d4af37;
+      border: none;
+      outline: none;
+      color: black;
+      padding: 5px 9px;
+      border-radius: 5px;
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <%- include('../partials/header.ejs') %>
+  <%- include('../partials/admin-navbar.ejs') %>
+  <%- include('../partials/flash.ejs') %>
+
+  <div class="edit-order">
+    <h1>Edit Order No <%= order.globalOrderId %> (<%= order.user.username %>)</h1>
+
+    <form action="/admin/orders/<%= order._id %>/edit" method="POST" class="edit-form">
+      <div class="brand">
+        <label for="brand">Brand : </label>
+        <select name="brand" id="brand">
+          <option value="">Select a Brand</option>
+          <option value="Acp" <%= order.brand === 'Acp' ? 'selected' : '' %>>Acp</option>
+          <option value="Mix" <%= order.brand === 'Mix' ? 'selected' : '' %>>Mix</option>
+        </select>
+      </div>
+
+      <h3>Order Details</h3>
+      <div id="items">
+        <% order.items.forEach((item, index) => { %>
+          <div class="item">
+            <div>
+              <label for="productId<%= index %>">Product : </label>
+              <select name="items[<%= index %>][productId]" id="productId<%= index %>">
+                <% products.forEach(product => { %>
+                  <option value="<%= product._id %>" <%= item.productId._id.equals(product._id) ? 'selected' : '' %>><%= product.name %></option>
+                <% }); %>
+              </select>
+            </div>
+
+            <div>
+              <label for="quantity<%= index %>">Quantity : </label>
+              <input type="number" name="items[<%= index %>][quantity]" id="quantity<%= index %>" value="<%= item.quantity %>">
+            </div>
+            <div>
+              <label for="price<%= index %>">Price : </label>
+              <input type="number" name="items[<%= index %>][price]" id="price<%= index %>" value="<%= item.price %>">
+            </div>
+          </div>
+        <% }); %>
+      </div>
+
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+</body>
+</html>

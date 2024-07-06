@@ -26,8 +26,6 @@ app.use(flash());
 // Middleware to set flash messages in response locals
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg");
-  /* The line `res.locals.error_msg = req.flash("error_msg");` is setting a local variable `error_msg`
-  in the response object `res`. */
   res.locals.error_msg = req.flash("error_msg");
   next();
 });
@@ -63,7 +61,7 @@ app.get("/", isLoggedIn, (req, res) => {
 app.get("/about", isLoggedIn, async (req, res) => {
   let path = "";
   let user = await User.findById(req.user._id);
-  res.render("about", { path  , user});
+  res.render("about", { path, user });
 });
 // Import Auth route
 const authRouter = require("./routes/auth");

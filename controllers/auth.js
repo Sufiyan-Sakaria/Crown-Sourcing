@@ -6,18 +6,17 @@ const jwt = require("jsonwebtoken");
 const login = async (req, res) => {
   const { username, password } = req.body;
   try {
-    // Find the user in the database by username
     const user = await userModel.findOne({ username });
 
-    // If user doesn't exist, redirect to request account
     if (!user) {
-      return res.redirect("/auth/request");
+      req.flash("error_msg", "Username is Incorrect");
+      return res.redirect("/auth/login");
     }
 
-    // If password is correct, generate token and redirect to home page
     Bcrypt.compare(password, user.password, (err, result) => {
       if (!result) {
-        return res.send("Invalid Password");
+        req.flash("error_msg", "Invalid Password");
+        return res.redirect("/auth/login");
       } else {
         let payload = { username: user.username, id: user._id };
         let token = jwt.sign(payload, process.env.JWT_KEY);
@@ -26,8 +25,8 @@ const login = async (req, res) => {
       }
     });
   } catch (error) {
-    // Send error response if login fails
-    res.send(error.message);
+    req.flash("error_msg", "Login failed. Please try again.");
+    res.redirect("/auth/login");
   }
 };
 

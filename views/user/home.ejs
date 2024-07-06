@@ -1,286 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Page | Crown Sourcing</title>
-    <link rel="stylesheet" href="/styles/partials/header.css" />
-    <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
-    <link rel="stylesheet" href="/styles/partials/flash.css" />
-    <!-- Add more stylesheets or meta tags as needed -->
-  </head>
-  <style>
-    * {
-  font-family: "poppins";
-}
 
-h2 {
-  text-align: center;
-  font-weight: 500;
-}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Page | Crown Sourcing</title>
+  <link rel="stylesheet" href="/styles/partials/header.css" />
+  <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
+  <link rel="stylesheet" href="/styles/partials/flash.css" />
+  <!-- Add more stylesheets or meta tags as needed -->
+</head>
+<style>
+  * {
+    font-family: "poppins";
+  }
 
-.filtering {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
+  h2 {
+    text-align: center;
+    font-weight: 500;
+  }
 
-.sorting-options form select{
-  background: transparent;
-  color: white;
-  padding: 3px 5px;
-  border-radius: 5px;
-  font-size: 15px;
-}
+  .filter-buttons {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-shrink: 1;
+    flex-wrap: wrap;
+  }
 
-.sorting-options form select option{
-  background: #1c1c1c;
-  font-size: 15px;
-}
+  .filter-buttons button {
+    border: none;
+    outline: none;
+    font-size: 18px;
+    background: #3b3b3b;
+    padding: 3px 10px;
+    border-radius: 5px;
+    text-transform: capitalize;
+  }
 
-.filter-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
+  .products {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
 
-.filter-buttons button {
-  border: none;
-  outline: none;
-  font-size: 18px;
-  background: #3b3b3b;
-  padding: 3px 10px;
-  border-radius: 5px;
-}
+  .product {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
 
-.products {
-  max-width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin: 10px 0 0 0;
-}
+  .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
-.product {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  gap: 5px;
-  margin-bottom: 10px;
-}
+  .image img {
+    border-radius: 15px;
+    width: 88vw;
+    height: 26vh;
+    object-fit: cover;
+  }
 
-.image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
+  .no-products p {
+    margin-top: 100px;
+    text-align: center;
+    font-size: 19px;
+    color: gray;
+  }
 
-.image img {
-  border-radius: 15px;
-  width: 88vw;
-  height: 26vh;
-  object-fit: cover;
-}
+  .search-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
 
-.info {
-  width: 100%;
-  padding: 0 20px 0 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-transform: capitalize;
-  text-align: center;
-  gap: 10px;
-}
+  .search-box input {
+    width: 80%;
+    padding: 3px 10px;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1.2rem;
+    background: transparent;
+    border: 1px solid gray;
+    color: white;
+  }
 
-.info h3 {
-  font-weight: 400;
-  width: 60%;
-}
+  .search-box button {
+    border: none;
+    outline: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.no-products p {
-  margin-top: 100px;
-  text-align: center;
-  font-size: 19px;
-  color: gray;
-}
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.search-box {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
+  .pagination a {
+    text-decoration: none;
+    color: #fff;
+    margin: 0 5px;
+    padding: 12px 20px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+  }
 
-.search-box input {
-  width: 80%;
-  padding: 3px 10px;
-  border-radius: 5px;
-  outline: none;
-  font-size: 1.2rem;
-  background: transparent;
-  border: 1px solid gray;
-  color: white;
-}
+  .pagination a:hover {
+    background-color: #f0f0f0;
+  }
 
-.search-box button {
-  border: none;
-  outline: none;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .pagination a.active {
+    background-color: #d4af37;
+    color: #000;
+    pointer-events: none;
+  }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.pagination a {
-  text-decoration: none;
-  color: #fff;
-  margin: 0 5px;
-  padding: 12px 20px;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
-.pagination a:hover {
-  background-color: #f0f0f0;
-}
-.pagination a.active {
-  background-color: #d4af37;
-  color: #000;
-  pointer-events: none;
-}
-.pagination a.disabled {
-  color: #ccc;
-  pointer-events: none;
-}
-.pagination a.arrow {
-  padding: 8px 10px;
-}
+  .pagination a.disabled {
+    color: #ccc;
+    pointer-events: none;
+  }
 
-.container {
-  max-width: 96vw;
-  margin: 10px auto; 
-  margin-bottom: 120px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 10px;
-}
+  .pagination a.arrow {
+    padding: 8px 10px;
+  }
 
-  </style>
-  <body>
-    <%- include('../partials/header') %>
+  .container {
+    max-width: 96vw;
+    margin: 10px auto;
+    margin-bottom: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .product h3 {
+    font-weight: 500;
+    font-size: 1.3rem;
+  }
+</style>
+
+<body>
+  <%- include('../partials/header') %>
     <%- include('../partials/navbar') %>
-    <%- include('../partials/flash') %>
+      <%- include('../partials/flash') %>
 
-    <div class="container">
-      <h2>Welcome <%= user.username %> 👋</h2>
+        <div class="container">
+          <h2>Welcome <%= user.username %> 👋</h2>
 
-      <!-- Search Form -->
-      <form action="/user" method="get" class="search-box">
-        <input
-          type="search"
-          name="search"
-          placeholder="Search products..."
-          value="<%= search %>""
-        />
-        <button type="submit"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" x="0" y="0" viewBox="0 0 612.01 612.01" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M606.209 578.714 448.198 423.228C489.576 378.272 515 318.817 515 253.393 514.98 113.439 399.704 0 257.493 0S.006 113.439.006 253.393s115.276 253.393 257.487 253.393c61.445 0 117.801-21.253 162.068-56.586l158.624 156.099c7.729 7.614 20.277 7.614 28.006 0a19.291 19.291 0 0 0 .018-27.585zM257.493 467.8c-120.326 0-217.869-95.993-217.869-214.407S137.167 38.986 257.493 38.986c120.327 0 217.869 95.993 217.869 214.407S377.82 467.8 257.493 467.8z" fill="#fff" opacity="1" data-original="#000000" class=""></path></g></svg></button>
-      </form>
-
-      <div class="filtering">
-        <!-- Sorting Options -->
-        <div class="sorting-options">
-          <form action="/user" method="get">
-            <input type="hidden" name="search" value="<%= search %>" />
-            <input type="hidden" name="page" value="<%= currentPage %>" />
-            <select name="sort" onchange="this.form.submit()">
-              <option value="stock" <%= sort === 'stock' ? 'selected' : '' %>>Sort Products</option>
-              <option value="a-z" <%= sort === 'a-z' ? 'selected' : '' %>>A-Z</option>
-              <option value="z-a" <%= sort === 'z-a' ? 'selected' : '' %>>Z-A</option>
-              <option value="price-high-low" <%= sort === 'price-high-low' ? 'selected' : '' %>>Price High to Low</option>
-              <option value="price-low-high" <%= sort === 'price-low-high' ? 'selected' : '' %>>Price Low to High</option>
-            </select>
+          <!-- Search Form -->
+          <form action="/user" method="get" class="search-box">
+            <input type="search" name="search" placeholder="Search products..." value="<%= search %>" />
+            <button type="submit">
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+                width="25" height="25" x="0" y="0" viewBox="0 0 612.01 612.01" style="enable-background:new 0 0 512 512"
+                xml:space="preserve" class="">
+                <g>
+                  <path
+                    d="M606.209 578.714 448.198 423.228C489.576 378.272 515 318.817 515 253.393 514.98 113.439 399.704 0 257.493 0S.006 113.439.006 253.393s115.276 253.393 257.487 253.393c61.445 0 117.801-21.253 162.068-56.586l158.624 156.099c7.729 7.614 20.277 7.614 28.006 0a19.291 19.291 0 0 0 .018-27.585zM257.493 467.8c-120.326 0-217.869-95.993-217.869-214.407S137.167 38.986 257.493 38.986c120.327 0 217.869 95.993 217.869 214.407S377.82 467.8 257.493 467.8z"
+                    fill="#fff" opacity="1" data-original="#000000" class=""></path>
+                </g>
+              </svg>
+            </button>
           </form>
-        </div>
-        <!-- Filter Buttons -->
-        <div class="filter-buttons">
-          <button type="button" onclick="filterProducts('all')">All</button>
-          <button type="button" onclick="filterProducts('mix')">Mix</button>
-          <button type="button" onclick="filterProducts('acp')">ACP</button>
-        </div>
-      </div>
 
-      <% if (products.length) { %>
-      <div class="products">
-        <% products.forEach(product => { %>
-        <a href="user/product/<%= product._id %>">
-          <div class="product" data-category="<%= product.category %>">
-            <div class="image">
-              <img
-                src="data:<%= product.image.contentType %>;base64,<%= product.image.data.toString('base64') %>"
-                alt="not found"
-              />
-            </div>
-            <div class="info">
-              <h3><%= product.name %></h3>
-              <p>Rs: <%= product.price %></p>
-            </div>
+          <!-- Filter Buttons -->
+          <div class="filter-buttons">
+            <button onclick="filterProducts('all')">All</button>
+            <% brands.forEach(brand=> { %>
+              <button onclick="filterProducts('<%= brand %>')">
+                <%= brand %>
+              </button>
+              <% }) %>
+                <% categories.forEach(category=> { %>
+                  <button onclick="filterProducts('<%= category %>')">
+                    <%= category %>
+                  </button>
+                  <% }) %>
           </div>
-        </a>
-        <% }) %>
-      </div>
 
-      <!-- Pagination Controls -->
-      <% if (totalPages !== 1) { %>
-        <div class="pagination">
-          <% if (currentPage > 1) { %>
-              <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>" class="arrow">« </a>
-          <% } else { %>
-              <a class="arrow disabled">« </a>
-          <% } %>
-  
-          <% for (let i = 1; i <= totalPages; i++) { %>
-              <a href="?page=<%= i %>&limit=<%= limit %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
-          <% } %>
-  
-          <% if (currentPage < totalPages) { %>
-              <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>" class="arrow"> »</a>
-          <% } else { %>
-              <a class="arrow disabled"> »</a>
-          <% } %>
-      </div>
-      <% } %>
+          <% if (products.length) { %>
+            <div class="products">
+              <% products.forEach(product=> { %>
+                <a href="user/product/<%= product._id %>">
+                  <div class="product" data-category="<%= product.category %>" data-brand="<%= product.brand %>">
+                    <div class="image">
+                      <img
+                        src="data:<%= product.image.contentType %>;base64,<%= product.image.data.toString('base64') %>"
+                        alt="not found" />
+                    </div>
+                    <h3>
+                      <%= product.name %>
+                    </h3>
+                  </div>
+                </a>
+                <% }) %>
+            </div>
 
-      <% } else { %>
-        <div class="no-products">
-          <p>Products not Found.</p>
+            <!-- Pagination Controls -->
+            <% if (totalPages !==1) { %>
+              <div class="pagination">
+                <% if (currentPage> 1) { %>
+                  <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>" class="arrow">« </a>
+                  <% } else { %>
+                    <a class="arrow disabled">« </a>
+                    <% } %>
+
+                      <% for (let i=1; i <=totalPages; i++) { %>
+                        <a href="?page=<%= i %>&limit=<%= limit %>" class="<%= i === currentPage ? 'active' : '' %>">
+                          <%= i %>
+                        </a>
+                        <% } %>
+
+                          <% if (currentPage < totalPages) { %>
+                            <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>" class="arrow"> »</a>
+                            <% } else { %>
+                              <a class="arrow disabled"> »</a>
+                              <% } %>
+              </div>
+              <% } %>
+
+                <% } else { %>
+                  <div class="no-products">
+                    <p>Products not Found.</p>
+                  </div>
+                  <% } %>
         </div>
-        <% } %>
-    <script>
-      function filterProducts(category) {
-        const products = document.querySelectorAll(".product");
-        products.forEach((product) => {
-          if (category === "all") {
-            product.style.display = "flex";
-          } else if (product.getAttribute("data-category") === category) {
-            product.style.display = "flex";
-          } else {
-            product.style.display = "none";
+
+        <script>
+          function filterProducts(category) {
+            const products = document.querySelectorAll(".product");
+            products.forEach((product) => {
+              if (category === "all") {
+                product.style.display = "flex";
+              } else if (product.dataset.category === category || product.dataset.brand === category) {
+                product.style.display = "flex";
+              } else {
+                product.style.display = "none";
+              }
+            });
           }
-        });
-      }
-    </script>
-  </body>
+        </script>
+</body>
+
 </html>

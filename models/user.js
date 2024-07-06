@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
           required: true,
         },
         quantity: { type: Number, required: true },
-        category: { type: String, required: true },
+        brand: { type: String, required: true },
       },
     ],
   },
@@ -29,8 +29,8 @@ const userSchema = new mongoose.Schema({
       ref: "Payment",
     },
   ],
-  balanceACP: { type: Number, default: 0 }, // Add separate balance for ACP
-  balanceMix: { type: Number, default: 0 }, // Add separate balance for Mix
+  balanceACP: { type: Number, default: 0 },
+  balanceMix: { type: Number, default: 0 },
 });
 
 const User = mongoose.model("User", userSchema);

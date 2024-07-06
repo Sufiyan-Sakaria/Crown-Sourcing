@@ -180,14 +180,14 @@
                   <tr>
                     <th>Date</th>
                     <th>Amount</th>
-                    <th>Category</th>
+                    <th>Brand</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td><%= formatDate(payment.createdAt) %></td>
                     <td>Rs: <%= payment.amount.toLocaleString() %></td>
-                    <td><%= payment.category %></td>
+                    <td><%= payment.brand %></td>
                   </tr>
                 </tbody>
               </table>
@@ -222,14 +222,14 @@
                   <tr>
                     <th>Date</th>
                     <th>Amount</th>
-                    <th>Category</th>
+                    <th>Brand</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td><%= formatDate(order.orderDate) %></td>
                     <td>Rs: <%= order.total.toLocaleString() %></td>
-                    <td><%= order.category.toUpperCase() %></td>
+                    <td><%= order.brand %></td>
                   </tr>
                 </tbody>
               </table>

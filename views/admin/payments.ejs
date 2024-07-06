@@ -43,6 +43,7 @@
 }
 
 table {
+  width: 100%;
   border: 1px solid white;
   border-collapse: collapse;
 }
@@ -133,13 +134,13 @@ th {
   <div class="container">
     <h1>Manage Payments</h1>
 
-    <!-- Category Filter -->
+    <!-- Brand Filter -->
     <form action="/admin/payments" method="GET" class="category-filter">
-      <label for="category">Filter by Category : </label>
-      <select name="category" id="category" onchange="this.form.submit()">
+      <label for="brand">Filter by Brand : </label>
+      <select name="brand" id="brand" onchange="this.form.submit()">
         <option value="">All</option>
-        <option value="ACP" <% if (selectedCategory === 'ACP') { %> selected <% } %>>ACP</option>
-        <option value="Mix" <% if (selectedCategory === 'Mix') { %> selected <% } %>>Mix</option>
+        <option value="Acp" <% if (selectedbrand === 'Acp') { %> selected <% } %>>ACP</option>
+        <option value="Mix" <% if (selectedbrand === 'Mix') { %> selected <% } %>>Mix</option>
       </select>
     </form>
 
@@ -151,7 +152,7 @@ th {
             <th>#</th>
             <th>User</th>
             <th>Rs</th>
-            <th>Cat</th>
+            <th>Brand</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -166,7 +167,7 @@ th {
             <td><%= payment.globalPaymentId %></td>
             <td><%= payment.user.username %></td>
             <td><%= payment.amount.toLocaleString() %></td>
-            <td><%= payment.category %></td>
+            <td><%= payment.brand %></td>
             <td class="<%= payment.status.toLowerCase() %>"><%= payment.status %></td>
             <td>
               <div class="actions">

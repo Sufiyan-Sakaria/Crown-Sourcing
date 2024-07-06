@@ -11,132 +11,120 @@
     <link rel="stylesheet" href="/styles/partials/header.css" />
     <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
     <link rel="stylesheet" href="/styles/partials/flash.css" />
+    <style>
+      * {
+        font-family: "poppins";
+      }
+      .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+      .top h2 {
+        text-align: center;
+        font-weight: 500;
+        font-size: 30px;
+      }
+      .top a {
+        font-size: 45px;
+        text-decoration: none !important;
+      }
+      .filter-buttons {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .filter-buttons p {
+        font-size: 18px;
+      }
+      .filter-buttons button {
+        border: none;
+        outline: none;
+        font-size: 18px;
+        background: #3b3b3b;
+        padding: 3px 10px;
+        border-radius: 5px;
+      }
+      .no-products {
+        margin-top: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-size: 19px;
+        gap: 10px;
+      }
+      .no-products p {
+        color: gray;
+      }
+      .no-products a {
+        font-size: 22px;
+      }
+      .no-products a:hover {
+        text-decoration: underline;
+        text-decoration-color: #d4af37;
+      }
+      .products {
+        margin: 15px auto;
+        width: 94vw;
+      }
+      table {
+        width: 100%;
+        border: 1px solid white;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid white;
+        text-align: center;
+        font-size: 17px;
+        padding: 5px 5px;
+      }
+      th {
+        font-size: 20px;
+        font-weight: 500;
+      }
+      .actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+      .edit,
+      .delete {
+        text-decoration: none !important;
+        font-size: 28px;
+      }
+      .edit i {
+        color: rgb(3, 173, 3);
+      }
+      .delete i {
+        color: red;
+      }
+      p.end {
+        text-align: center;
+        margin-bottom: 110px;
+      }
+      form button {
+        border: none;
+        outline: none;
+        cursor: pointer;
+      }
+      .stock {
+        color: green;
+      }
+      .out-stock {
+        color: red;
+      }
+    </style>
   </head>
-  <style>
-    * {
-      font-family: "poppins";
-    }
-
-    .top {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-    }
-
-    .top h2 {
-      text-align: center;
-      font-weight: 500;
-      font-size: 30px;
-    }
-
-    .top a {
-      font-size: 45px;
-      text-decoration: none !important;
-    }
-
-    .filter-buttons {
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .filter-buttons p {
-      font-size: 18px;
-    }
-
-    .filter-buttons button {
-      border: none;
-      outline: none;
-      font-size: 18px;
-      background: #3b3b3b;
-      padding: 3px 10px;
-      border-radius: 5px;
-    }
-
-    .no-products {
-      margin-top: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      font-size: 19px;
-      gap: 10px;
-    }
-
-    .no-products p {
-      color: gray;
-    }
-
-    .no-products a {
-      font-size: 22px;
-    }
-
-    .no-products a:hover {
-      text-decoration: underline;
-      text-decoration-color: #d4af37;
-    }
-
-    .products {
-      margin: 15px auto;
-      width: 94vw;
-    }
-
-    table {
-      width: 100%;
-      border: 1px solid white;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      border: 1px solid white;
-      text-align: center;
-      font-size: 17px;
-      padding: 5px 5px;
-    }
-
-    th {
-      font-size: 20px;
-      font-weight: 500;
-    }
-
-    .actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
-    }
-
-    .edit,
-    .delete {
-      text-decoration: none !important;
-      font-size: 28px;
-    }
-
-    .edit i {
-      color: rgb(3, 173, 3);
-    }
-
-    .delete i {
-      color: red;
-    }
-
-    p.end {
-      text-align: center;
-      margin-bottom: 110px;
-    }
-
-    form button {
-      border: none;
-      outline: none;
-      cursor: pointer;
-    }
-  </style>
   <body>
     <%- include('../partials/header.ejs') %> <%-
     include('../partials/admin-navbar.ejs') %> <%-
     include('../partials/flash.ejs') %>
+
     <div class="top">
       <h2>List of All Products</h2>
       <a href="/admin/product/add"><i class="ri-add-box-fill"></i></a>
@@ -144,10 +132,14 @@
 
     <!-- Filter Buttons -->
     <div class="filter-buttons">
-      <p>Filter By Category :</p>
       <button onclick="filterProducts('all')">All</button>
-      <button onclick="filterProducts('mix')">Mix</button>
-      <button onclick="filterProducts('acp')">ACP</button>
+      <% brands.forEach(brand => { %>
+      <button onclick="filterProducts('<%= brand %>')"><%= brand %></button>
+      <% }) %> <% categories.forEach(category => { %>
+      <button onclick="filterProducts('<%= category %>')">
+        <%= category %>
+      </button>
+      <% }) %>
     </div>
 
     <% if (products.length) { %>
@@ -157,18 +149,26 @@
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Qty</th>
-            <th>Price</th>
+            <th>Stock</th>
+            <th>Category</th>
+            <th>Brand</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <% products.reverse().forEach((product, index) => { %>
-          <tr class="product" data-category="<%= product.category %>">
+          <tr
+            class="product"
+            data-brand="<%= product.brand %>"
+            data-category="<%= product.category %>"
+          >
             <td><%= index + 1 %></td>
             <td><%= product.name %></td>
-            <td><%= product.stock %></td>
-            <td><%= product.price %></td>
+            <td class="<%= product.inStock ? 'stock' : 'out-stock' %>">
+              <%= product.inStock ? 'In Stock' : 'Out of Stock' %>
+            </td>
+            <td><%= product.category %></td>
+            <td><%= product.brand %></td>
             <td>
               <div class="actions">
                 <a href="/user/product/<%= product._id %>"
@@ -201,12 +201,15 @@
     <% } %>
 
     <script>
-      function filterProducts(category) {
+      function filterProducts(filter) {
         const products = document.querySelectorAll(".product");
         products.forEach((product) => {
-          if (category === "all") {
+          if (filter === "all") {
             product.style.display = "table-row";
-          } else if (product.getAttribute("data-category") === category) {
+          } else if (
+            product.getAttribute("data-brand") === filter ||
+            product.getAttribute("data-category") === filter
+          ) {
             product.style.display = "table-row";
           } else {
             product.style.display = "none";

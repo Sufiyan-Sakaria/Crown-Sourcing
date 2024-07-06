@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,334 +8,375 @@
     <link rel="stylesheet" href="/styles/partials/flash.css" />
     <link rel="stylesheet" href="/styles/partials/header.css" />
     <link rel="stylesheet" href="/styles/partials/admin-navbar.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins";
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+
+        h3 {
+            width: 100%;
+            text-align: center;
+        }
+
+        strong {
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .container {
+            max-width: 92vw;
+            margin: 10px auto;
+            margin-bottom: 110px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .orders {
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .order {
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            flex-direction: column;
+            gap: 6.5px;
+            background: #313131;
+            border-radius: 10px;
+            padding: 15px 10px;
+        }
+
+        .order h2 {
+            background: #313131;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .order form {
+            background: #313131;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .order form select {
+            background: transparent;
+            padding: 2px 3px;
+            border-radius: 5px;
+        }
+
+        .order form select option {
+            background: #1c1c1c;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .order table {
+            width: 100%;
+            border: 1px solid white;
+            background: #313131;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid white;
+            text-align: center;
+            font-size: 16px;
+            padding: 3px;
+        }
+
+        th {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .pending {
+            color: yellow;
+        }
+
+        .rejected {
+            color: red;
+        }
+
+        .approved {
+            color: lightgreen;
+        }
+
+        form#limitForm {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        form#limitForm select {
+            background: transparent;
+            padding: 2px 3px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        form#limitForm select option {
+            background: #1c1c1c;
+            font-size: 1rem;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            color: #fff;
+            margin: 0 5px;
+            padding: 11px 15px;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .pagination a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .pagination a.active {
+            background-color: #d4af37;
+            color: #000;
+            pointer-events: none;
+        }
+
+        .pagination a.disabled {
+            color: #ccc;
+            pointer-events: none;
+        }
+
+        .pagination a.arrow {
+            padding: 8px 10px;
+        }
+
+        .end-of-list {
+            text-align: center;
+        }
+
+        .end {
+            text-align: center;
+            color: gray;
+            margin-top: 50px;
+        }
+
+        #brandFilterForm {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        #brandFilterForm select {
+            background: transparent;
+            padding: 2px 3px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        #brandFilterForm select option {
+            background: #1c1c1c;
+            font-size: 1rem;
+        }
+
+        .forms {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-direction: column;
+        }
+
+        .upper {
+            text-transform: uppercase;
+        }
+
+        #edit {
+            color: #d4af37;
+            font-size: 1.1rem;
+        }
+
+        .top {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-right: 2vw;
+        }
+    </style>
 </head>
-<style>
-    * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "poppins";
-}
 
-h1 {
-  text-align: center;
-  font-size: 1.4rem;
-  font-weight: 500;
-}
-
-h3 {
-  width: 100%;
-  text-align: center;
-}
-
-strong {
-  font-weight: 600;
-  text-transform: capitalize;
-}
-
-select.pending {
-  color: yellow;
-}
-
-select.rejected {
-  color: red;
-}
-
-select.approved {
-  color: lightgreen;
-}
-
-.container {
-  max-width: 92vw;
-  margin: 10px auto;
-  margin-bottom: 110px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.orders {
-  max-width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.order {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
-  gap: 6.5px;
-  background: #313131;
-  border-radius: 10px;
-  padding: 15px 10px;
-}
-
-.order h2 {
-  background: #313131;
-  font-size: 1.2rem;
-  font-weight: 500;
-}
-
-.order form {
-  background: #313131;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.order form select {
-  background: transparent;
-  padding: 2px 3px;
-  border-radius: 5px;
-}
-
-.order form select option {
-  background: #1c1c1c;
-  font-size: 1rem;
-}
-
-.order table {
-  width: 100%;
-  border: 1px solid white;
-  background: #313131;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  border: 1px solid white;
-  text-align: center;
-  font-size: 16px;
-  padding: 3px;
-}
-
-th {
-  font-size: 20px;
-  font-weight: 500;
-}
-
-option.pending {
-  color: yellow;
-}
-
-option.rejected {
-  color: red;
-}
-
-option.approved {
-  color: lightgreen;
-}
-
-form#limitForm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-form#limitForm select {
-  background: transparent;
-  padding: 2px 3px;
-  border-radius: 5px;
-  color: white;
-}
-
-form#limitForm select option {
-  background: #1c1c1c;
-  font-size: 1rem;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.pagination a {
-  text-decoration: none;
-  color: #fff;
-  margin: 0 5px;
-  padding: 12px 20px;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
-.pagination a:hover {
-  background-color: #f0f0f0;
-}
-.pagination a.active {
-  background-color: #d4af37;
-  color: #000;
-  pointer-events: none;
-}
-.pagination a.disabled {
-  color: #ccc;
-  pointer-events: none;
-}
-.pagination a.arrow {
-  padding: 8px 10px;
-}
-
-.end-of-list {
-  text-align: center;
-}
-
-.end {
-  text-align: center;
-  color: gray;
-  margin-top: 50px;
-}
-
-#categoryFilterForm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-#categoryFilterForm select {
-  background: transparent;
-  padding: 2px 3px;
-  border-radius: 5px;
-  color: white;
-}
-
-#categoryFilterForm select option {
-  background: #1c1c1c;
-  font-size: 1rem;
-}
-
-.forms {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex-direction: column;
-}
-
-.upper {
-  text-transform: uppercase;
-}
-</style>
 <body>
     <%- include('../partials/header.ejs') %>
-    <%- include('../partials/admin-navbar.ejs') %>
-    <%- include('../partials/flash.ejs') %>
-    <h1>List of All Orders</h1>
+        <%- include('../partials/admin-navbar.ejs') %>
+            <%- include('../partials/flash.ejs') %>
 
-    <div class="forms">
-        <!-- Orders per page Form -->
-        <form method="GET" action="/admin/orders" id="limitForm">
-            <label for="limit">Orders per page:</label>
-            <select name="limit" id="limit" onchange="document.getElementById('page').value = 1; this.form.submit()">
-                <option value="5" <%= limit === 5 ? 'selected' : '' %>>5</option>
-                <option value="10" <%= limit === 10 ? 'selected' : '' %>>10</option>
-                <option value="20" <%= limit === 20 ? 'selected' : '' %>>20</option>
-                <option value="50" <%= limit === 50 ? 'selected' : '' %>>50</option>
-            </select>
-            <input type="hidden" name="page" value="<%= currentPage %>" id="page">
-        </form>
+                <h1>List of Orders</h1>
 
-        <!-- Filter by Category Form -->
-        <form method="GET" action="/admin/orders" id="categoryFilterForm">
-            <label for="category">Filter by Category :</label>
-            <select name="category" id="category" onchange="document.getElementById('categoryFilterForm').submit()">
-                <option value="">All</option>
-                <option value="acp" <%= selectedCategory === 'acp' ? 'selected' : '' %>>ACP</option>
-                <option value="mix" <%= selectedCategory === 'mix' ? 'selected' : '' %>>Mix</option>
-                <!-- Add more options as needed -->
-            </select>
-            <input type="hidden" name="page" value="<%= currentPage %>" id="page">
-            <input type="hidden" name="limit" value="<%= limit %>" id="limit">
-        </form>
-    </div>
+                <!-- Brand Filter Form -->
+                <div class="forms">
+                    <form method="GET" action="/admin/orders" id="brandFilterForm">
+                        <label for="brand">Filter by Brand:</label>
+                        <select name="brand" id="brand" onchange="document.getElementById('brandFilterForm').submit()">
+                            <option value="">All</option>
+                            <option value="Acp" <%=brand==='Acp' ? 'selected' : '' %>>ACP</option>
+                            <option value="Mix" <%=brand==='Mix' ? 'selected' : '' %>>Mix</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                    </form>
 
-    <% if (orders.length > 0) { %>
-        <div class="container">
-            <div class="orders">
-                <% 
-                    orders.sort((a, b) => {
-                        const statusOrder = { 'Pending': 3, 'Approved': 2, 'Rejected': 1 };
-                        return statusOrder[a.status] - statusOrder[b.status];
-                    });
-                    orders.reverse().forEach((order, index) => { 
-                %>
-                    <div class="order">
-                        <h2>Order No <%= order.globalOrderId %> (<%= order.user ? order.user.username : 'Unknown User' %>)</h2>
-                        <div class="top">
-                            <form action="/admin/orders/<%= order._id %>/status" method="post">
-                                <label for="status"><strong>Status : </strong></label>
-                                <select name="status" class="<%= order.status.toLowerCase() %>" onchange="this.form.submit()">
-                                    <option class="pending" value="Pending" <%= order.status === 'Pending' ? 'selected' : '' %>>Pending</option>
-                                    <option class="approved" value="Approved" <%= order.status === 'Approved' ? 'selected' : '' %>>Approved</option>
-                                    <option class="rejected" value="Rejected" <%= order.status === 'Rejected' ? 'selected' : '' %>>Rejected</option>
-                                </select>
-                            </form>
-                        </div>
-                        <p class="upper"><strong>Category : </strong> <%= order.category || 'Not specified' %></p>
-                        <p><strong>Date : </strong><%= order.orderDate ? order.orderDate.toDateString() : 'Date not available' %></p>
-                        <p><strong>Total : </strong> Rs: <%= order.total || 'Total not available' %></p>
-                        <h3>Products List</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Qty</th>
-                                    <th>Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% let totalQty = 0; %>
-                                <% order.items.forEach((item, itemIndex) => { %>
-                                    <% totalQty += item.quantity; %>
-                                    <tr>
-                                        <td><%= itemIndex + 1 %>.</td>
-                                        <td><%= item.productId ? item.productId.name : 'Product not found' %></td>
-                                        <td><%= item.quantity || 'Quantity not available' %></td>
-                                        <td><%= (item.productId && item.quantity) ? (item.productId.price * item.quantity) : 'Price not available' %></td>
-                                    </tr>
-                                <% }); %>
-                                <tr>
-                                    <td colspan="2"><strong>Grand Total</strong></td>
-                                    <td><strong><%= totalQty %></strong></td>
-                                    <td><strong><%= order.total %></strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                <% }); %>
-            </div>
-
-            <!-- Pagination Controls -->
-            <% if (totalPages !== 1) { %>
-                <div class="pagination">
-                    <% if (currentPage > 1) { %>
-                        <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>&category=<%= selectedCategory %>" class="arrow">« </a>
-                    <% } else { %>
-                        <a class="arrow disabled">« </a>
-                    <% } %>
-    
-                    <% for (let i = 1; i <= totalPages; i++) { %>
-                        <a href="?page=<%= i %>&limit=<%= limit %>&category=<%= selectedCategory %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
-                    <% } %>
-    
-                    <% if (currentPage < totalPages) { %>
-                        <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>&category=<%= selectedCategory %>" class="arrow"> »</a>
-                    <% } else { %>
-                        <a class="arrow disabled"> »</a>
-                    <% } %>
+                    <!-- Limit Form for items per page -->
+                    <form method="GET" action="/admin/orders" id="limitForm">
+                        <label for="limit">Orders per page:</label>
+                        <select name="limit" id="limit" onchange="document.getElementById('limitForm').submit()">
+                            <option value="5" <%=limit===5 ? 'selected' : '' %>>5</option>
+                            <option value="10" <%=limit===10 ? 'selected' : '' %>>10</option>
+                            <option value="20" <%=limit===20 ? 'selected' : '' %>>20</option>
+                            <option value="30" <%=limit===30 ? 'selected' : '' %>>30</option>
+                            <option value="50" <%=limit===50 ? 'selected' : '' %>>50</option>
+                        </select>
+                        <input type="hidden" name="page" value="<%= currentPage || 1 %>" id="page">
+                        <input type="hidden" name="brand" value="<%= brand || '' %>" id="brand">
+                    </form>
                 </div>
-            <% } %>
-            
-            <p class="end-of-list">End of List</p>
-        </div>
-    <% } else { %>
-        <p class="end">No orders found.</p>
-    <% } %>
+
+                <% if (orders && orders.length> 0) { %>
+                    <!-- Orders List -->
+                    <div class="container">
+                        <div class="orders">
+                            <% orders.forEach((order, index)=> { %>
+                                <div class="order">
+                                    <div class="top">
+                                        <h2>Order No <%= order.globalOrderId %>
+                                        </h2> <!-- Display globalOrderId -->
+                                        <form method="POST" action="/admin/orders/<%= order._id %>/status">
+                                            <label for="status-<%= order._id %>">Status:</label>
+                                            <select name="status" id="status-<%= order._id %>"
+                                                onchange="this.form.submit()" class="<%= order.status.toLowerCase() %>">
+                                                <option value="Pending" <%=order.status==='Pending' ? 'selected' : '' %>
+                                                    >Pending</option>
+                                                <option value="Approved" <%=order.status==='Approved' ? 'selected' : ''
+                                                    %>>Approved</option>
+                                                <option value="Rejected" <%=order.status==='Rejected' ? 'selected' : ''
+                                                    %>>Rejected</option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                    <p class="date">
+                                        <strong>Date : </strong>
+                                        <%= order.orderDate ? order.orderDate.toDateString() : 'N/A' %>
+                                    </p>
+                                    <p>
+                                        <strong>User : </strong>
+                                        <%= order.user ? order.user.username : 'Unknown' %>
+                                    </p>
+                                    <p>
+                                        <strong>Brand : </strong>
+                                        <%= order.brand==='Acp' ? 'ACP' : (order.brand==='Mix' ? 'Mix' : 'Unknown' ) %>
+                                    </p>
+                                    <a href="/admin/orders/<%= order._id %>/edit" id="edit">Edit Order</a>
+                                    <h3>Products List</h3>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Qty</th>
+                                                <th>Price</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% let totalQty=0; %>
+                                                <% order.items?.forEach((item, itemIndex)=> { %>
+                                                    <% totalQty +=item.quantity; %>
+                                                        <tr>
+                                                            <td>
+                                                                <%= itemIndex + 1 %>.
+                                                            </td>
+                                                            <td>
+                                                                <%= item.productId?.name || 'Unknown' %>
+                                                            </td>
+                                                            <td>
+                                                                <%= item.quantity %>
+                                                            </td>
+                                                            <td>
+                                                                <%= item?.price %>
+                                                            </td>
+                                                            <td>
+                                                                <%= (item?.price * item.quantity) %>
+                                                            </td>
+                                                        </tr>
+                                                        <% }); %>
+                                                            <tr>
+                                                                <td colspan="2"><strong>Grand Total</strong></td>
+                                                                <td><strong>
+                                                                        <%= totalQty %>
+                                                                    </strong></td>
+                                                                <td colspan="2"><strong>
+                                                                        <%= order.total %>
+                                                                    </strong></td>
+                                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <% }); %>
+                        </div>
+
+                        <!-- Pagination Controls -->
+                        <% if (totalPages && totalPages> 1) { %>
+                            <div class="pagination">
+                                <% if (currentPage> 1) { %>
+                                    <a href="?page=<%= currentPage - 1 %>&limit=<%= limit %>&brand=<%= brand %>"
+                                        class="arrow">«</a>
+                                    <% } else { %>
+                                        <a class="arrow disabled">«</a>
+                                        <% } %>
+
+                                            <% for (let i=1; i <=totalPages; i++) { %>
+                                                <a href="?page=<%= i %>&limit=<%= limit %>&brand=<%= brand %>"
+                                                    class="<%= i === currentPage ? 'active' : '' %>">
+                                                    <%= i %>
+                                                </a>
+                                                <% } %>
+
+                                                    <% if (currentPage < totalPages) { %>
+                                                        <a href="?page=<%= currentPage + 1 %>&limit=<%= limit %>&brand=<%= brand %>"
+                                                            class="arrow">»</a>
+                                                        <% } else { %>
+                                                            <a class="arrow disabled">»</a>
+                                                            <% } %>
+                            </div>
+                            <% } %>
+
+                                <p class="end-of-list">End of List</p>
+                    </div>
+                    <% } else { %>
+                        <p class="end">No orders found.</p>
+                        <% } %>
 </body>
+
 </html>

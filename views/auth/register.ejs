@@ -1,200 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register - Crown Source</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
-    />
-  </head>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&display=swap");
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Alegreya Sans SC", sans-serif;
-    }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - Crown Source</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" />
+</head>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&display=swap");
 
-    body {
-      background-color: #121212;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Alegreya Sans SC", sans-serif;
+  }
 
-    .register-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      width: 100%;
-    }
+  body {
+    background-color: #121212;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 
-    .register-box {
-      background-color: #1c1c1c;
-      padding: 30px 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      text-align: center;
-      width: 92vw;
-      color: #d4af37;
-    }
+  .register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
 
-    .logo img {
-      width: 120px;
-      height: 170px;
-      object-fit: cover;
-    }
+  .register-box {
+    background-color: #1c1c1c;
+    padding: 30px 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 92vw;
+    color: #d4af37;
+  }
 
-    h1 {
-      font-size: 24px;
-      font-weight: 400;
-      margin-top: 15px;
-      line-height: 1;
-      text-transform: uppercase;
-    }
+  .logo img {
+    width: 120px;
+    height: 170px;
+    object-fit: cover;
+  }
 
-    p {
-      font-size: 22px;
-    }
+  h1 {
+    font-size: 24px;
+    font-weight: 400;
+    margin-top: 15px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      margin: 20px auto 35px auto;
-    }
+  p {
+    font-size: 22px;
+  }
 
-    input {
-      background-color: transparent;
-      border: none;
-      outline: none;
-      border-bottom: 1px solid #d4af37;
-      padding: 10px;
-      margin-bottom: 10px;
-      color: #fff;
-      font-size: 20px;
-      font-family: "poppins";
-    }
+  form {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto 35px auto;
+  }
 
-    button {
-      margin-top: 20px;
-      background-color: #d4af37;
-      border: none;
-      border-radius: 5px;
-      padding: 5px 10px;
-      color: #1c1c1c;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 30px;
-    }
+  input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #d4af37;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 20px;
+    font-family: "poppins";
+  }
 
-    button:hover {
-      background-color: #b8952e;
-    }
+  button {
+    margin-top: 20px;
+    background-color: #d4af37;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: #1c1c1c;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 30px;
+  }
 
-    a {
-      display: block;
-      margin-top: 10px;
-      color: #d4af37;
-      text-decoration: none;
-      font-size: 25px;
-    }
+  button:hover {
+    background-color: #b8952e;
+  }
 
-    a:hover {
-      text-decoration: underline;
-    }
+  a {
+    display: block;
+    margin-top: 10px;
+    color: #d4af37;
+    text-decoration: none;
+    font-size: 25px;
+  }
 
-    .password-input {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #d4af37;
-    }
+  a:hover {
+    text-decoration: underline;
+  }
 
-    .password-input input {
-      border: none;
-      padding: 2px 10px;
-    }
+  .password-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #d4af37;
+  }
 
-    .toggle-password {
-      position: absolute;
-      right: 2.5vw;
-      bottom: 1vh;
-      cursor: pointer;
-      font-size: 30px;
-    }
+  .password-input input {
+    border: none;
+    padding: 2px 10px;
+  }
 
-    .Role {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 20px;
-      gap: 15px;
-      font-size: 28px;
-    }
+  .toggle-password {
+    position: absolute;
+    right: 2.5vw;
+    bottom: 1vh;
+    cursor: pointer;
+    font-size: 30px;
+  }
 
-    .Role select {
-      font-size: 21px;
-      padding: 5px 10px;
-      background: transparent;
-      color: white;
-      border-radius: 5px;
-    }
+  .Role {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 15px;
+    font-size: 28px;
+  }
 
-    .Role select option {
-      background: #1c1c1c;
-      font-size: 20px;
-    }
-  </style>
-  <body>
-    <div class="register-container">
-      <div class="register-box">
-        <div class="logo">
-          <img src="/images/logo.png" alt="Crown Source Logo" />
-        </div>
-        <h1>create new user</h1>
-        <form action="/auth/register" method="post">
-          <input
-            type="text"
-            name="username"
-            placeholder="Enter Username"
-            required
-            maxlength="64"
-            minlength="4"
-          />
-          <div class="password-input">
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Enter Password"
-              required
-              maxlength="32"
-              minlength="8"
-            />
-            <span class="toggle-password" onclick="togglePassword('password')">
-              <i id="password-icon" class="ri-eye-line"></i>
-            </span>
-          </div>
-          <div class="Role">
-            <label for="Role">Role : </label>
-            <select name="Role" id="Role">
-              <option value="">Select A Role</option>
-              <option value="Admin">Admin</option>
-              <option value="User">User</option>
-            </select>
-          </div>
-          <button type="submit">Register</button>
-        </form>
-        <a href="/auth/login">Back to Login</a>
+  .Role select {
+    font-size: 21px;
+    padding: 5px 10px;
+    background: transparent;
+    color: white;
+    border-radius: 5px;
+  }
+
+  .Role select option {
+    background: #1c1c1c;
+    font-size: 20px;
+  }
+</style>
+
+<body>
+  <div class="register-container">
+    <div class="register-box">
+      <div class="logo">
+        <img src="/images/logo.png" alt="Crown Source Logo" />
       </div>
+      <h1>create new user</h1>
+      <form action="/auth/register" method="post">
+        <input type="text" name="username" placeholder="Enter Username" required maxlength="64" minlength="4" />
+        <div class="password-input">
+          <input type="password" name="password" id="password" placeholder="Enter Password" required maxlength="32"
+            minlength="8" />
+          <span class="toggle-password" onclick="togglePassword('password')">
+            <i id="password-icon" class="ri-eye-line"></i>
+          </span>
+        </div>
+        <div class="Role">
+          <label for="Role">Role : </label>
+          <select name="Role" id="Role">
+            <option value="">Select A Role</option>
+            <option value="Admin">Admin</option>
+            <option value="User">User</option>
+          </select>
+        </div>
+        <button type="submit">Register</button>
+      </form>
     </div>
-    <script src="/javascript/password.js"></script>
-  </body>
+  </div>
+  <script src="/javascript/password.js"></script>
+</body>
+
 </html>

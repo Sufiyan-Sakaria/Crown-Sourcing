@@ -10,22 +10,22 @@ const productSchema = new Schema({
   description: {
     type: String,
   },
-  price: {
-    type: Number,
-    required: true,
-  },
   image: {
     data: Buffer,
     contentType: String,
   },
-  category: {
+  brand: {
     type: String,
-    enum: ["mix", "acp"],
+    enum: ["Mix", "Acp"],
     required: true,
   },
-  stock: {
-    type: Number,
+  category: {
+    type: String,
     required: true,
+  },
+  inStock: {
+    type: Boolean,
+    default: true,
   },
   createdAt: {
     type: Date,

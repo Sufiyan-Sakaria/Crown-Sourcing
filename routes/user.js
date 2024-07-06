@@ -7,59 +7,53 @@ const router = require("express").Router();
 const Count = require("../models/count");
 
 router.get("/", isLoggedIn, async (req, res) => {
-  const path = "/users";
-  const user = await userModel.findOne(req.user._id);
+  try {
+    const path = "/users";
+    const search = req.query.search || "";
+    const limit = parseInt(req.query.limit) || 10;
+    const page = parseInt(req.query.page) || 1;
+    const selectedBrand = req.query.brand || "all";
+    const selectedCategory = req.query.category || "all";
 
-  // Get search, pagination, and sorting parameters from the query string
-  const search = req.query.search || "";
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
-  const sort = req.query.sort || "stock"; // Default to sorting by stock
+    // Fetch distinct brands and categories
+    const brands = await productModel.distinct("brand");
+    const categories = await productModel.distinct("category");
 
-  // Create a filter object for search
-  const filter = search ? { name: { $regex: search, $options: "i" } } : {};
+    let query = {};
+    if (search) {
+      query.name = { $regex: search, $options: "i" };
+    }
+    if (selectedBrand !== "all") {
+      query.brand = selectedBrand;
+    }
+    if (selectedCategory !== "all") {
+      query.category = selectedCategory;
+    }
 
-  // Determine the sort order
-  let sortOrder;
-  switch (sort) {
-    case "a-z":
-      sortOrder = { name: 1 };
-      break;
-    case "z-a":
-      sortOrder = { name: -1 };
-      break;
-    case "price-high-low":
-      sortOrder = { price: -1 };
-      break;
-    case "price-low-high":
-      sortOrder = { price: 1 };
-      break;
-    case "stock":
-    default:
-      sortOrder = { stock: -1 };
+    const products = await productModel
+      .find(query)
+      .skip((page - 1) * limit)
+      .limit(limit);
+    const totalProducts = await productModel.countDocuments(query);
+    const totalPages = Math.ceil(totalProducts / limit);
+
+    res.render("user/home", {
+      user: req.user, // Assuming user information is stored in req.user
+      products,
+      brands,
+      categories,
+      search,
+      selectedBrand,
+      selectedCategory,
+      currentPage: page,
+      totalPages,
+      limit,
+      path,
+    });
+  } catch (error) {
+    console.error("Error fetching products:", error.message);
+    res.status(500).send("Internal Server Error");
   }
-
-  // Calculate the total number of products and total pages
-  const totalProducts = await productModel.countDocuments(filter);
-  const totalPages = Math.ceil(totalProducts / limit);
-
-  // Fetch the products with the applied filters, pagination, and sorting
-  const products = await productModel
-    .find(filter)
-    .sort(sortOrder)
-    .skip((page - 1) * limit)
-    .limit(limit);
-
-  res.render("user/home", {
-    path,
-    user,
-    products,
-    totalPages,
-    currentPage: page,
-    search,
-    sort,
-    limit,
-  });
 });
 
 router.get("/product/:id", isLoggedIn, async (req, res) => {
@@ -87,10 +81,10 @@ router.get("/cart/:id", isLoggedIn, async (req, res) => {
     // Extract cart items and categorize them
     const cartItem = user.cart.items || [];
     const acpProducts = cartItem.filter(
-      (product) => product.productId.category === "acp"
+      (product) => product.productId.brand === "Acp"
     );
     const mixProducts = cartItem.filter(
-      (product) => product.productId.category === "mix"
+      (product) => product.productId.brand === "Mix"
     );
 
     res.render("user/cart", {
@@ -109,12 +103,11 @@ router.get("/cart/:id", isLoggedIn, async (req, res) => {
 
 router.post("/cart/add", isLoggedIn, async (req, res) => {
   try {
-    const { userId, productId, quantity, category } = req.body;
+    const { userId, productId, quantity, category, brand } = req.body;
 
     // Check if all required parameters are provided
-    if (!userId || !productId || !quantity || !category) {
+    if (!userId || !productId || !quantity || !category || !brand) {
       req.flash("error_msg", "Missing required parameters");
-      console.log(userId, productId, quantity, category);
       return res.redirect("back");
     }
 
@@ -137,35 +130,27 @@ router.post("/cart/add", isLoggedIn, async (req, res) => {
       return res.redirect("back");
     }
 
-    // Validate product price
-    if (isNaN(product.price)) {
-      req.flash("error_msg", "Invalid product price");
-      return res.redirect("back");
-    }
-
     // Check if the product category matches with the requested category
     if (product.category !== category) {
       req.flash("error_msg", "Product category does not match");
       return res.redirect("back");
     }
 
+    // Check if the product brand matches with the requested brand
+    if (product.brand !== brand) {
+      req.flash("error_msg", "Product brand does not match" + product.brand);
+      return res.redirect("back");
+    }
+
     // Find the cart item
     const cartItem = user.cart.items.find(
-      (item) =>
-        item.productId.toString() === productId && item.category === category
+      (item) => item.productId.toString() === productId && item.brand === brand
     );
 
     if (cartItem) {
       cartItem.quantity += parsedQuantity;
     } else {
-      user.cart.items.push({ productId, quantity: parsedQuantity, category });
-    }
-
-    // Update the respective balance based on category
-    if (category === "ACP") {
-      user.balanceACP += product.price * parsedQuantity;
-    } else if (category === "Mix") {
-      user.balanceMix += product.price * parsedQuantity;
+      user.cart.items.push({ productId, quantity: parsedQuantity, brand });
     }
 
     // Save the user document
@@ -180,49 +165,30 @@ router.post("/cart/add", isLoggedIn, async (req, res) => {
   }
 });
 
+// Update quantity in user's cart
 router.post("/cart/update", async (req, res) => {
-  const { productId, userId, quantity, category } = req.body;
+  const { productId, userId, quantity, brand } = req.body;
 
   try {
-    let user = await userModel
-      .findById(userId)
-      .populate("cart.items.productId");
+    let user = await userModel.findById(userId);
 
-    // Filter items by category
-    let items = user.cart.items.filter(
-      (item) => item.productId.category === category
-    );
-    let item = items.find(
-      (item) => item.productId._id.toString() === productId
+    // Find the item in the cart by productId and brand
+    let itemIndex = user.cart.items.findIndex(
+      (item) => item.productId.toString() === productId && item.brand === brand
     );
 
-    if (item) {
-      item.quantity = quantity;
+    if (itemIndex !== -1) {
+      // Update quantity if item exists
+      user.cart.items[itemIndex].quantity = quantity;
       await user.save();
 
-      // Calculate updated totals for the specific category
-      let updatedTotal = item.productId.price * item.quantity;
-      let updatedGrandTotal = items.reduce(
-        (acc, curr) => acc + curr.productId.price * curr.quantity,
-        0
-      );
-      let updatedTotalQuantity = items.reduce(
-        (acc, curr) => acc + curr.quantity,
-        0
-      );
-
-      res.json({
-        success: true,
-        updatedTotal,
-        updatedGrandTotal,
-        updatedTotalQuantity,
-      });
+      res.json({ success: true });
     } else {
-      res.json({ success: false });
+      res.json({ success: false, error: "Item not found in cart." });
     }
   } catch (error) {
     console.error(error);
-    res.json({ success: false });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
@@ -259,13 +225,13 @@ router.post("/cart/delete/:productId/:userId", isLoggedIn, async (req, res) => {
   }
 });
 
-// Route to view user's orders by category
+// Route to view user's orders by category with pagination and limit
 router.get("/orders/:id", async (req, res) => {
   try {
     const userId = req.params.id;
     const page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 10;
-    const category = req.query.category; // Get the category from query parameter
+    const brand = req.query.brand; // Get the brand from query parameter
 
     // Validate limit to prevent unreasonable values
     if (limit < 1 || limit > 50) {
@@ -285,13 +251,19 @@ router.get("/orders/:id", async (req, res) => {
       return res.redirect("/user"); // Redirect if user is not found
     }
 
-    // Filter orders by category if category query parameter is provided
+    // Filter orders by brand if brand query parameter is provided
     let filteredOrders = user.orders;
-    if (category) {
+    if (brand) {
       filteredOrders = filteredOrders.filter(
-        (order) => order.category === category
+        (order) => order.brand.toLowerCase() === brand.toLowerCase()
       );
     }
+
+    // Sort filtered orders by status: Pending -> Approved -> Rejected
+    filteredOrders.sort((a, b) => {
+      const statusOrder = { Pending: 1, Approved: 2, Rejected: 3 };
+      return statusOrder[a.status] - statusOrder[b.status];
+    });
 
     // Pagination logic for user's orders
     const totalOrders = filteredOrders.length;
@@ -304,14 +276,14 @@ router.get("/orders/:id", async (req, res) => {
       user,
       orders: ordersOnPage.map((order) => ({
         ...order.toObject(),
-        category: order.category, // Add category to order object
+        brand: order.brand, // Add brand to order object
       })),
       path: "/orders",
       currentPage: page,
       totalPages: Math.ceil(totalOrders / limit),
       limit,
       totalOrders,
-      category, // Pass category to template for filtering UI
+      brand, // Pass brand to template for filtering UI
     });
   } catch (err) {
     console.error(err);
@@ -323,7 +295,7 @@ router.get("/orders/:id", async (req, res) => {
 // Checkout route
 router.post("/checkout/:id", async (req, res) => {
   const userId = req.params.id;
-  const category = req.query.category; // Get the category from the query parameter
+  const brand = req.query.brand; // Get the category from the query parameter
 
   try {
     const user = await userModel
@@ -335,9 +307,7 @@ router.post("/checkout/:id", async (req, res) => {
       return res.redirect(`/user/cart/${userId}`);
     }
 
-    const cartItems = user.cart.items.filter(
-      (item) => item.category === category
-    );
+    const cartItems = user.cart.items.filter((item) => item.brand === brand);
 
     if (cartItems.length === 0) {
       req.flash("error_msg", "Your cart is empty.");
@@ -349,14 +319,10 @@ router.post("/checkout/:id", async (req, res) => {
 
     // Decrease stock of products and calculate order total
     for (let item of cartItems) {
-      orderTotal += item.productId.price * item.quantity;
       orderItems.push({
         productId: item.productId._id,
         quantity: item.quantity,
       });
-
-      // Decrease stock of products
-      item.productId.stock -= item.quantity;
       await item.productId.save();
     }
 
@@ -376,10 +342,9 @@ router.post("/checkout/:id", async (req, res) => {
     const newOrder = new orderModel({
       user: userId,
       items: orderItems,
-      total: orderTotal,
       userOrderId: userOrderCount,
       globalOrderId: count.globalOrderCount,
-      category: category, // Save the category of the order
+      brand, // Save the category of the order
     });
 
     // Save the new order to MongoDB
@@ -388,17 +353,8 @@ router.post("/checkout/:id", async (req, res) => {
     // Add order reference to user's orders array
     user.orders.push(newOrder._id);
 
-    // Add order amount to the respective balance
-    if (category === "acp") {
-      user.balanceACP += orderTotal;
-    } else if (category === "mix") {
-      user.balanceMix += orderTotal;
-    }
-
     // Remove ordered items from the cart
-    user.cart.items = user.cart.items.filter(
-      (item) => item.category !== category
-    );
+    user.cart.items = user.cart.items.filter((item) => item.brand !== brand);
 
     // Save user document with updated orders, balances, and cart
     await user.save();
@@ -481,7 +437,7 @@ router.post("/payment/acp/:id", async (req, res) => {
     // Generate user-specific payment ID for ACP payments
     const userPaymentCountACP = await paymentModel.countDocuments({
       user: userId,
-      category: "ACP",
+      brand: "Acp",
     });
 
     const newPaymentACP = new paymentModel({
@@ -490,7 +446,7 @@ router.post("/payment/acp/:id", async (req, res) => {
       status: "Pending",
       userPaymentId: userPaymentCountACP + 1,
       globalPaymentId: (await paymentModel.countDocuments()) + 1, // Assuming globalPaymentId is the count of all payments
-      category: "ACP", // Set category as ACP
+      brand: "Acp", // Set Brand as ACP
     });
 
     await newPaymentACP.save();
@@ -535,7 +491,7 @@ router.post("/payment/mix/:id", async (req, res) => {
     // Generate user-specific payment ID for Mix payments
     const userPaymentCountMix = await paymentModel.countDocuments({
       user: userId,
-      category: "Mix",
+      brand: "Mix",
     });
 
     const newPaymentMix = new paymentModel({
@@ -544,7 +500,7 @@ router.post("/payment/mix/:id", async (req, res) => {
       status: "Pending",
       userPaymentId: userPaymentCountMix + 1,
       globalPaymentId: (await paymentModel.countDocuments()) + 1, // Assuming globalPaymentId is the count of all payments
-      category: "Mix", // Set category as Mix
+      brand: "Mix", // Set category as Mix
     });
 
     await newPaymentMix.save();

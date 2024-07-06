@@ -212,7 +212,7 @@
             <tr>
               <th>#</th>
               <th>Amount</th>
-              <th>Cat</th>
+              <th>Brand</th>
               <th>Status</th>
               <th>Date</th>
             </tr>
@@ -222,7 +222,7 @@
             <tr>
               <td><%= payment.userPaymentId %></td>
               <td><%= payment.amount.toLocaleString() %></td>
-              <td><%= payment.category %></td>
+              <td><%= payment.brand %></td>
               <td class="<%= payment.status.toLowerCase() %>">
                 <%= payment.status %>
               </td>
